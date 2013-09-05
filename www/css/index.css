@@ -113,3 +113,10 @@ h1 {
     animation:fade 3000ms infinite;
     -webkit-animation:fade 3000ms infinite;
 }
+
+
+
+
+.css-form input.ng-invalid.ng-dirty {
+	background-color: #FA787E;
+}

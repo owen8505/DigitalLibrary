@@ -1,0 +1,23 @@
+.bookshelf-row{
+    background-image: url(../img/bookshelf_row.jpg);
+    background-size:  100% 100%;
+    padding: 50px;
+}
+
+.book{
+    background: none;
+    border: none;
+    vertical-align: central;
+    text-align: center;
+    color: #000;
+    font-weight: bold;
+    font-size: 12px;
+    min-width: 150px;
+    min-height: 150px;
+    max-width: 150px;
+    padding: 20px 30px 30px 45px;
+    background-image: url(../img/book_gray_small.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    margin: 0px;
+}

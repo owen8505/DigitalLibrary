@@ -1,0 +1,8 @@
+<div class="login" ng-controller="LoginCtrl">
+	<h1>{{title}}</h1>
+	<form name="form" class="css-form" novalidate>
+		Username: <input type="text" id="login_user" name="login_user" ng-model="user.username" required /><br />
+		Password: <input type="password" id="login_pass" name="login_pass" ng-model="user.password" required /><br />
+		<button ng-click="login(user)">Login</button>
+	</form>
+</div>
