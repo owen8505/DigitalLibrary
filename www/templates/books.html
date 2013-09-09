@@ -1,0 +1,31 @@
+<div id="content" class="large-9 columns">
+	<div id="tools" class="row">
+		<div id="search" class="large-10 columns">
+			<form id="search-form">
+				<input type="search" placeholder="Search documents">
+			</form>
+		</div>
+		<div id="buttons" class="large-2 columns">
+			<a href="" title="Grouping View"><span class="icon-icons"></span></a>
+			<a href="" title="List View"><span class="icon-menu"></span></a>
+		</div>
+	</div> 
+
+	<hr class="separator-2">
+
+	<div id="info" clas="row">
+		<h4>{{subtitle}} ({{elements.length}})</h4>
+		<section ng-repeat="element in elements" class="large-3 columns documento-info">
+			<ng-switch on="element.type">
+				<span ng-switch-when="folder" ng-click="searchDocuments(element.id, element.name)">
+					<span class="sprite-image folder"></span>
+					<span class="document-title">FOLDER{{element.name}}</span>
+				</span>
+				<span ng-switch-default>
+					<span class="sprite-image"></span>
+					<span class="document-title">DOCUMENT{{element.name}}</span>
+				</span>
+			</ng-switch>
+		</section>
+	</div>
+</div>  

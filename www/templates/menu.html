@@ -1,0 +1,15 @@
+<aside id="navigation" class="large-3 columns">
+	<h3>Departments</h3>
+	<hr class="separator-1">
+	<nav>
+		<ul class="nav-departmet">
+			<li><span class="icon-star"></span> Last Reviewed</li>
+			<li ng-repeat="department in menu" ng-hide="department.functionalArea.length == 0">
+				<span class="icon-books"></span> {{department.name}}
+				<ul class="nav-functonal-area">
+					<li ng-repeat="fa in department.functionalArea"><span ng-click="searchDocumentFolder(fa.id, fa.name)">{{fa.name}}</span></li>
+				</ul>
+			</li>                 
+		</ul>
+	</nav>
+</aside>
