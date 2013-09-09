@@ -1,0 +1,319 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('../fonts/icomoon.eot');
+	src:url('../fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/icomoon.woff') format('woff'),
+		url('../fonts/icomoon.ttf') format('truetype'),
+		url('../fonts/icomoon.svg#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+	font-family: 'icomoon';
+	content: attr(data-icon);
+	speak: none;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* Use the following CSS code if you want to have a class per icon */
+/*
+Instead of a list of all class selectors,
+you can use the generic selector below, but it's slower:
+[class*="icon-"] {
+*/
+.icon-search, .icon-star, .icon-star-2, .icon-star-3, .icon-lock, .icon-unlocked, .icon-envelope, .icon-home, .icon-remove, .icon-attachment, .icon-info, .icon-menu, .icon-warning, .icon-user, .icon-icons, .icon-link, .icon-help, .icon-ellipsis, .icon-arrow-right, .icon-arrow-left, .icon-arrow-down, .icon-arrow-up, .icon-file-word, .icon-file-excel, .icon-file-powerpoint, .icon-file-pdf, .icon-books, .icon-book, .icon-bookmark, .icon-cloud-dl, .icon-filter {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+.icon-search:before {
+	content: "\e000";
+}
+.icon-star:before {
+	content: "\e004";
+}
+.icon-star-2:before {
+	content: "\e005";
+}
+.icon-star-3:before {
+	content: "\e006";
+}
+.icon-lock:before {
+	content: "\e00a";
+}
+.icon-unlocked:before {
+	content: "\e00b";
+}
+.icon-envelope:before {
+	content: "\e00c";
+}
+.icon-home:before {
+	content: "\e00d";
+}
+.icon-remove:before {
+	content: "\e013";
+}
+.icon-attachment:before {
+	content: "\e014";
+}
+.icon-info:before {
+	content: "\e015";
+}
+.icon-menu:before {
+	content: "\e024";
+}
+.icon-warning:before {
+	content: "\e025";
+}
+.icon-user:before {
+	content: "\e030";
+}
+.icon-icons:before {
+	content: "\e03a";
+}
+.icon-link:before {
+	content: "\e029";
+}
+.icon-help:before {
+	content: "\e042";
+}
+.icon-ellipsis:before {
+	content: "\e043";
+}
+.icon-arrow-right:before {
+	content: "\e044";
+}
+.icon-arrow-left:before {
+	content: "\e045";
+}
+.icon-arrow-down:before {
+	content: "\e046";
+}
+.icon-arrow-up:before {
+	content: "\e047";
+}
+.icon-file-word:before {
+	content: "\e054";
+}
+.icon-file-excel:before {
+	content: "\e055";
+}
+.icon-file-powerpoint:before {
+	content: "\e056";
+}
+.icon-file-pdf:before {
+	content: "\e057";
+}
+.icon-books:before {
+	content: "\e05c";
+}
+.icon-book:before {
+	content: "\e05d";
+}
+.icon-bookmark:before {
+	content: "\f02e";
+}
+.icon-cloud-dl:before {
+	content: "\e05e";
+}
+.icon-filter:before {
+	content: "\e05f";
+}
+
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+}
+
+/* Portrait layout (default) */
+.app {
+    background:url(../img/logo.png) no-repeat center top; /* 170px x 200px */
+    position:absolute;             /* position in the center of the screen */
+    left:50%;
+    top:50%;
+    height:50px;                   /* text area height */
+    width:225px;                   /* text area width */
+    text-align:center;
+    padding:180px 0px 0px 0px;     /* image height is 200px (bottom 20px are overlapped with text) */
+    margin:-115px 0px 0px -112px;  /* offset vertical: half of image height and text area height */
+                                   /* offset horizontal: half of text area width */
+}
+
+body,html{
+	background: #3d3d3d url('../img/low_contrast_linen_@2X.png') repeat top left;
+	/*background: #17202B url('../img/bkg-nas-mexico.png') no-repeat top left;*/
+	background-size: 100%;
+	margin: 0;
+	padding: 0;
+
+}
+
+body{	
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+	color: #222;
+}
+
+h1, h2, h3, h4, h5, h6{
+	margin: 0;
+	padding: 0;
+
+}
+
+header{
+	margin: 0 auto;
+	padding: 1rem 0rem 0.2rem;
+}
+
+header h1{
+	color: #999;
+	font-family: 'Open Sans';
+	font-size: 2rem;
+	font-weight: 300;
+	margin: 1rem 0rem 1.5rem;
+	text-shadow: black 0.1em 0.1em 0.2em;
+}
+
+header h1 a{
+	color: #fff;
+	height: 333;
+}
+
+hr{
+	margin: 0px !important;
+}
+
+hr.separator-1{
+	background: transparent url('../img/img-hr-backgrpund.png') repeat-x center;
+	border: 0;
+	height: 2px;	
+}
+
+hr.separator-{
+	background: transparent url('../img/img-hr-backgrpund-2.png') repeat-x center;
+	border: 0;
+	height: 2px;
+}
+
+ul.nav-departmet{
+	margin: 1rem;
+	padding: 0px;
+}
+
+ul.nav-departmet > li{
+	color: #707777;
+	font-size: 1rem;
+	font-weight: normal;
+	padding: 0.5rem 1.5rem 0.8rem;
+	text-transform: uppercase;
+}
+
+ul.nav-departmet  ul.nav-functonal-area{
+	color: #b8bbbb;
+	font-size: 0.9rem;
+	font-weight: 300;
+	margin-left: 0px;
+	text-transform: none;
+}
+
+ul.nav-departmet  ul.nav-functonal-area li{
+	margin: 0.2rem 0.2rem 0.3rem;
+}
+
+
+#content{
+	/*background-color: #d3d3d3;*/
+	padding: 1rem 1rem;
+}
+
+#content #search input{
+	border-radius: 50px;
+	padding-left: 1rem;
+}
+
+#content #buttons{
+	text-align: right;
+}
+
+#content #info{
+
+}
+
+#content #info h4{
+	margin: 1rem 0rem;
+}
+
+#main-container{
+	background-color: #fff;
+}
+
+#navigation{
+	background-color: #090C10;	
+	font-family: 'Open Sans';
+	font-weight: 300;
+	padding: 1rem 0rem;
+}
+
+#navigation h3{
+	font-family: 'Open Sans';
+	font-size: 1.5rem;
+	font-weight: 300;
+	color: #d3d3d3;
+	margin: 0rem 0.5rem 0.9rem 1rem;
+}
+
+#navigation nav{
+	margin: 1rem 0rem;
+}
+
+.arrow-left {
+	width: 0; 
+	height: 0; 
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+	border-right:10px solid white; 
+}
+
+.document-1{
+	background-position: -600px -410px !important;	
+	display: inline-block;
+	height: 120px;
+	width: 100px;
+}
+
+.documento-info{
+	text-align: center;
+}
+
+.documento-info .document-title{
+	display: block;
+	font-size: 1rem;
+}
+
+.sprite-image{
+	background: transparent url('../img/img-sprite.png') no-repeat;
+	background-size: 800px;
+}
+
+.text-bold{
+	font-weight: bold;
+}
+
+
+
+/*** LOGIN ***/
+
+.css-form input.ng-invalid.ng-dirty {
+	background-color: #FA787E;
+}
