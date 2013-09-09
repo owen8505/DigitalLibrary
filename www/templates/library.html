@@ -1,45 +1,13 @@
-        <div id="library">
-            
-            <div id="library-header">
-                Digital Library
-            </div>
-            
-            <hr class="separator-1">
-            <div id="library-tools">
-                <div id="search">
-                    <form id="search-form">
-                        <input type="search" placeholder="Search documents">
-                    </form>
-                </div>
-                <div id="display-buttons">
-                    <a href="" title="Grouping View"><span class="icon-icons"></span></a>
-                    <a href="" title="List View"><span class="icon-menu"></span></a>
-                </div>
-            </div>
-            <hr class="separator-1">
-            
-            <div id="library-container">
-                <div>
-                    <span class="icon-books"></span>  Front Office
-                    <div>
-                        Executive Management
-                    </div>
-                </div>
-                
-                <div>
-                    <span class="icon-books"></span>  Management
-                    <div>
-                        <div>Office Administration</div>
-                        <div>Human Resources</div>
-                        <div>Procurement</div>
-                        <div>Finances</div>
-                        <div>Logistics</div>
-                        <div>IT Support</div>
-                        <div>COR</div>
-                        <div>Grants</div>
-                    </div>
-                </div>
-            </div>
+<div class="background"></div>
+<header class="row">
+	<div id="header-wrapper">
+		<h1>
+			Digital <span class="text-bold">Library</span>
+		</h1>
+	</div>
+</header>
 
-            
-        </div>
+<div id="main-container" class="row">
+    <div ng-include src="'templates/menu.html'" ng-controller='MenuCtrl'></div>
+    <div ng-include src="'templates/books.html'"></div>
+</div>
