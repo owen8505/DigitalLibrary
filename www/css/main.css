@@ -151,7 +151,6 @@ you can use the generic selector below, but it's slower:
 
 body,html{
 	background: #3d3d3d url('../img/low_contrast_linen_@2X.png') repeat top left;
-	/*background: #17202B url('../img/bkg-nas-mexico.png') no-repeat top left;*/
 	background-size: 100%;
 	margin: 0;
 	padding: 0;
@@ -162,7 +161,8 @@ body{
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-	color: #222;
+    font-family: 'Open Sans';
+    color: #fff;
 }
 
 h1, h2, h3, h4, h5, h6{
@@ -173,21 +173,15 @@ h1, h2, h3, h4, h5, h6{
 
 header{
 	margin: 0 auto;
-	padding: 1rem 0rem 0.2rem;
+	padding: 0.5rem 0rem 0.2rem;
 }
 
 header h1{
-	color: #999;
-	font-family: 'Open Sans';
+	color: #fff;
 	font-size: 2rem;
 	font-weight: 300;
 	margin: 1rem 0rem 1.5rem;
 	text-shadow: black 0.1em 0.1em 0.2em;
-}
-
-header h1 a{
-	color: #fff;
-	height: 333;
 }
 
 hr{
@@ -195,94 +189,15 @@ hr{
 }
 
 hr.separator-1{
-	background: transparent url('../img/img-hr-backgrpund.png') repeat-x center;
+	background: transparent url('../img/img-hr-background.png') repeat-x center;
 	border: 0;
 	height: 2px;	
 }
 
-hr.separator-{
-	background: transparent url('../img/img-hr-backgrpund-2.png') repeat-x center;
+hr.separator-2{
+	background: transparent url('../img/img-hr-background-2.png') repeat-x center;
 	border: 0;
 	height: 2px;
-}
-
-ul.nav-departmet{
-	margin: 1rem;
-	padding: 0px;
-}
-
-ul.nav-departmet > li{
-	color: #707777;
-	font-size: 1rem;
-	font-weight: normal;
-	padding: 0.5rem 1.5rem 0.8rem;
-	text-transform: uppercase;
-}
-
-ul.nav-departmet  ul.nav-functonal-area{
-	color: #b8bbbb;
-	font-size: 0.9rem;
-	font-weight: 300;
-	margin-left: 0px;
-	text-transform: none;
-}
-
-ul.nav-departmet  ul.nav-functonal-area li{
-	margin: 0.2rem 0.2rem 0.3rem;
-}
-
-
-#content{
-	/*background-color: #d3d3d3;*/
-	padding: 1rem 1rem;
-}
-
-#content #search input{
-	border-radius: 50px;
-	padding-left: 1rem;
-}
-
-#content #buttons{
-	text-align: right;
-}
-
-#content #info{
-
-}
-
-#content #info h4{
-	margin: 1rem 0rem;
-}
-
-#main-container{
-	background-color: #fff;
-}
-
-#navigation{
-	background-color: #090C10;	
-	font-family: 'Open Sans';
-	font-weight: 300;
-	padding: 1rem 0rem;
-}
-
-#navigation h3{
-	font-family: 'Open Sans';
-	font-size: 1.5rem;
-	font-weight: 300;
-	color: #d3d3d3;
-	margin: 0rem 0.5rem 0.9rem 1rem;
-}
-
-#navigation nav{
-	margin: 1rem 0rem;
-}
-
-.arrow-left {
-	width: 0; 
-	height: 0; 
-	border-top: 10px solid transparent;
-	border-bottom: 10px solid transparent;
-	border-right:10px solid white; 
 }
 
 .document-1{
@@ -311,9 +226,69 @@ ul.nav-departmet  ul.nav-functonal-area li{
 }
 
 
-
 /*** LOGIN ***/
+
+#login {
+    width: 90%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+#login-container {
+    background: #000;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+}
+
+#login-form {
+    width: 90%;
+    margin: 0 auto;
+    padding-top: 1rem;
+}
+
+#login-button {
+    margin: 0 auto;
+}
 
 .css-form input.ng-invalid.ng-dirty {
 	background-color: #FA787E;
+}
+
+
+/*** LIBRARY ***/
+
+#library {
+    background: #000;
+    width: 100%;
+}
+
+#library-header {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#library-tools {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+#library-tools #search {
+    display: inline-block;
+    width: 70%;
+    height: 1.5rem;
+    margin-left: 0.3rem;
+}
+
+#library-tools #search input {
+    height: 1.5rem;
+}
+
+#library-tools #display-buttons {
+    display: inline-block;
+    width: 15%;
+    height: 1.5rem;
 }

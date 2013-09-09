@@ -1,83 +1,45 @@
-        <!--[if lt IE 7]>
-            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-        <![endif]-->
-        <div class="background"></div>
-        <header class="row">
-            <div id="header-wrapper">
-                <h1>
-                    Digital <span class="text-bold">Library</span>                 
-                </h1>
-            </div>         
-        </header>    
-
-        <div id="main-container" class="row">
-
-            <aside id="navigation" class="large-3 columns">
-                <h3>Departments</h3>
-                <hr class="separator-1">
-                <nav>
-                    <ul class="nav-departmet">
-                        <li><span class="icon-star"></span>   Last Reviewed</li>
-                        <li>
-                            <span class="icon-books"></span>  Front Office
-                            <ul class="nav-functonal-area">
-                                <li>Executive Management</li>
-                            </ul>
-                        </li> 
-                        <li>
-                            <span class="icon-books"></span>  Policy Group
-                            <ul class="nav-functonal-area">
-                                <li>Policy</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <span class="icon-books"></span>  Program Office
-                            <ul class="nav-functonal-area">
-                                <li>Project Management</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <span class="icon-books"></span>  Management
-                            <ul class="nav-functonal-area">
-                                <li>Office Administration</li>
-                                <li>Human Resources</li>
-                                <li>Procurement</li>
-                                <li>Finances</li>
-                                <li>Logistics</li>
-                                <li>IT Support</li>
-                                <li>COR</li>
-                                <li>Grants</li>
-                            </ul>
-                        </li>                    
-                    </ul>
-                </nav>
-            </aside>            
-
+        <div id="library">
             
-        </div>                    
+            <div id="library-header">
+                Digital Library
+            </div>
+            
+            <hr class="separator-1">
+            <div id="library-tools">
+                <div id="search">
+                    <form id="search-form">
+                        <input type="search" placeholder="Search documents">
+                    </form>
+                </div>
+                <div id="display-buttons">
+                    <a href="" title="Grouping View"><span class="icon-icons"></span></a>
+                    <a href="" title="List View"><span class="icon-menu"></span></a>
+                </div>
+            </div>
+            <hr class="separator-1">
+            
+            <div id="library-container">
+                <div>
+                    <span class="icon-books"></span>  Front Office
+                    <div>
+                        Executive Management
+                    </div>
+                </div>
                 
+                <div>
+                    <span class="icon-books"></span>  Management
+                    <div>
+                        <div>Office Administration</div>
+                        <div>Human Resources</div>
+                        <div>Procurement</div>
+                        <div>Finances</div>
+                        <div>Logistics</div>
+                        <div>IT Support</div>
+                        <div>COR</div>
+                        <div>Grants</div>
+                    </div>
+                </div>
+            </div>
 
-        <footer>
-        </footer>
-
- 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>        
-        <script src="js/main.js"></script>
-
-        <script>
-            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src='//www.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g,s)}(document,'script'));
-        </script>
-
-        <script>
-            var departmentsJSON = {'departments' : [
-                    {'name' : 'Front Office', 'areas': 'Excecutive Management'},
-                    {'name' : 'Policy Group', 'areas': 'Policy'},
-                    {'name' : 'Program Office', 'areas': 'Project Management'},
-                    {'name' : 'Management', 'areas': ['Office Administration', 'Human Resources']}
-                ]
-            };
             
-        </script>
+        </div>
