@@ -1,20 +1,32 @@
 <div id="content">
-	<hr class="separator-2">
+	<hr class="separator-1"/>
+    <div id="library-tools">
+        <div id="search">
+            <form id="search-form">
+                <input type="search" placeholder="Search documents">
+            </form>
+        </div>
+        <div id="display-buttons">
+            <a href="" title="Grouping View"><span class="icon-icons" ng-click="clase = 'icons'"></span></a>
+            <a href="" title="List View"><span class="icon-menu" ng-click="clase = 'list'"></span></a>
+        </div>
+    </div>
+    <hr class="separator-1"/>
 
 	<div id="info">
 		<h4>{{subtitle}} ({{elements.length}})</h4>
         <br/>
-		<section ng-repeat="element in elements" class="documento-info">
+		<div ng-repeat="element in elements" ng-class="clase" class="documento-info">
 			<ng-switch on="element.type">
-				<span class="folder" ng-switch-when="folder" ng-click="searchDocuments(element.id, element.name)">
-					<div class="sprite-image folder-image"></div>
-					<span class="document-title">FOLDER{{element.name}}</span>
-				</span>
-				<span ng-switch-default>
-					<div class="sprite-image document-image"></div>
-					<span class="document-title">DOCUMENT{{element.name}}</span>
-				</span>
+				<div ng-switch-when="folder" ng-click="searchDocuments(element.id, element.name)">
+					<div class="folder-image"></div>
+					<div class="document-title">{{element.name}}</div>
+				</div>
+				<div ng-switch-default>
+					<div class="document-image"></div>
+					<div class="document-title">{{element.name}}</div>
+				</div>
 			</ng-switch>
-		</section>
+		</div>
 	</div>
 </div>  

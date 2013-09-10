@@ -253,10 +253,12 @@ hr.separator-2{
 #library-tools {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+    background: #000;
+    height: 2.5rem;
 }
 
 #library-tools #search {
-    display: inline-block;
+    float: left;
     width: 70%;
     height: 1.5rem;
     margin-left: 0.3rem;
@@ -267,19 +269,61 @@ hr.separator-2{
 }
 
 #library-tools #display-buttons {
-    display: inline-block;
-    width: 15%;
+    float: right;
+    width: 20%;
     height: 1.5rem;
+    text-align: right;
+    padding-top: 0.2rem;
+    padding-right: 0.3rem;
+}
+
+#display-buttons span {
+    font-size: 1.1rem;
+    color: #fff;
 }
 
 #info {
     background: #fff;
     color: #000;
+    padding-left: 2.5rem;
 }
 
-.folder {
+.icons {
     display: inline-block;
-    width: 7rem;
+    margin-right: 2.5rem;
+    text-align: center;
+}
+
+.icons div {
+    width: 6.3rem;
+    overflow: hidden;
+}
+
+.list {
+    text-align: left;
+    height: 2rem;
+}
+
+.list div {
+    display: inline-block !important;
+}
+
+.list .folder-image{
+	background: transparent url('../img/folder.png') no-repeat;	
+    background-size: 20px 24px;
+	display: inline-block;
+	height: 24px;
+	width: 20px;
+    border-width: 0px;
+}
+
+.list .document-image{
+	background: transparent url('../img/documento.png') no-repeat;	
+    background-size: 20px 24px;
+	display: inline-block;
+	height: 24px;
+	width: 20px;
+    border-width: 0px;
 }
 
 .folder-image{
@@ -300,13 +344,10 @@ hr.separator-2{
     border-width: 0px;
 }
 
-.documento-info{
-	text-align: center;
-}
-
 .documento-info .document-title{
 	display: block;
 	font-size: 0.8rem;
+    margin-bottom: 1rem;
 }
 
 .sprite-image{

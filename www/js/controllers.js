@@ -53,6 +53,7 @@ angular.module('App.controllers', [])
 		{id:"3", name:"LR3.otro", type:"folder"},
 		{id:"4", name:"LR4.pdf", type:"folder"}
 	];
+    $scope.clase = 'list';
 	
 	// Funciones
 	$scope.searchDocumentFolder = function(departmentId, departmentName) {
