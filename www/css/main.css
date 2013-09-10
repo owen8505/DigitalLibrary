@@ -200,11 +200,27 @@ hr.separator-2{
 	height: 2px;
 }
 
-.document-1{
-	background-position: -600px -410px !important;	
+.folder {
+    display: inline-block;
+    width: 7rem;
+}
+
+.folder-image{
+	background: transparent url('../img/folder.png') no-repeat;	
+    background-size: 100px 120px;
 	display: inline-block;
 	height: 120px;
 	width: 100px;
+    border-width: 0px;
+}
+
+.document-image{
+	background: transparent url('../img/documento.png') no-repeat;
+	background-size: 100px 120px;
+	display: inline-block;
+	height: 120px;
+	width: 100px;
+    border-width: 0px;
 }
 
 .documento-info{
@@ -213,12 +229,12 @@ hr.separator-2{
 
 .documento-info .document-title{
 	display: block;
-	font-size: 1rem;
+	font-size: 0.8rem;
 }
 
 .sprite-image{
-	background: transparent url('../img/img-sprite.png') no-repeat;
-	background-size: 800px;
+	//background: transparent url('../img/img-sprite.png') no-repeat;
+	//background-size: 600px;
 }
 
 .text-bold{
@@ -291,4 +307,9 @@ hr.separator-2{
     display: inline-block;
     width: 15%;
     height: 1.5rem;
+}
+
+#info {
+    background: #fff;
+    color: #000;
 }

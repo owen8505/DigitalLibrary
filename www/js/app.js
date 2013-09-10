@@ -6,7 +6,7 @@ angular.module('App', ['App.services', 'App.controllers'])
         $routeProvider
         	.when('/', {
 				controller: 'LoginCtrl',
-				templateUrl: 'templates/library.html'
+				templateUrl: 'templates/login.html'
 			})
 			.when('/library', {
 				controller: 'LibraryCtrl',
