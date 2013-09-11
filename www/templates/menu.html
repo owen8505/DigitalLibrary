@@ -1,14 +1,36 @@
-<aside id="navigation">
-	<hr class="separator-1"/>
+<div id="topMenu" class="sticky fixed show-for-small">
+	<nav id="topMenu-bar">
+		<span class="title">Digital Library</span>
+		<span class="menu-btn" ng-click="data.hideMenu = !data.hideMenu">Menu</span>
 	<nav>
-		<ul class="nav-departmet">
+	<div id="topMenu-right" ng-hide="data.hideMenu" style="color: red;">
+		<ul class="nav-department">
+			<li ng-click="searchDocumentFolder(0, 'Last Reviewed')">
+				<span><span class="icon-star"></span> Last Reviewed</span>
+			</li>
+			<li ng-repeat="department in menu" ng-hide="department.functionalArea.length == 0">
+				<span><span class="icon-books"></span> {{department.name}}</span>
+				<ul class="nav-functonal-area">
+					<li ng-repeat="fa in department.functionalArea">
+						<span ng-click="searchDocumentFolder(fa.id, fa.name)">{{fa.name}}</span>
+					</li>
+				</ul>
+			</li>                 
+		</ul>
+	</div>
+</div>
+
+<aside id="navigation" class="hide-for-small">
+	<hr class="separator-1">
+	<nav>
+		<ul class="nav-department">
 			<li><span class="icon-star"></span> Last Reviewed</li>
 			<li ng-repeat="department in menu" ng-hide="department.functionalArea.length == 0">
 				<span class="icon-books"></span> {{department.name}}
 				<ul class="nav-functonal-area">
 					<li ng-repeat="fa in department.functionalArea"><span ng-click="searchDocumentFolder(fa.id, fa.name)">{{fa.name}}</span></li>
 				</ul>
-			</li>                 
+			</li>
 		</ul>
 	</nav>
 </aside>

@@ -1,5 +1,13 @@
 angular.module('App.controllers', [])
-.controller('LoginCtrl', ['$scope', '$location', function ($scope, $location) {
+.factory('data', [function() {
+	var data = {};
+	data.hideMenu = true;
+	return data;
+}])
+.controller('LoginCtrl', ['$scope', '$location', 'data', function ($scope, $location, data) {
+	// Se guarda la variable data.
+	$scope.data = data;
+	
 	// Variables
 	$scope.title = 'Digital Library';
 	$scope.connecting = 'Connecting to Device';
@@ -20,7 +28,10 @@ angular.module('App.controllers', [])
 		}
 	};
 }])
-.controller('MenuCtrl', ['$scope', function ($scope) {
+.controller('MenuCtrl', ['$scope', 'data', function ($scope, data) {
+	// Se guarda la variable data.
+	$scope.data = data;
+	
 	// Servicio que traería todo el menú
 	$scope.menu = [
 		{id:"1", name: "Front Office", functionalArea: [
@@ -44,7 +55,10 @@ angular.module('App.controllers', [])
 		]}
 	]
 }])
-.controller('LibraryCtrl', ['$scope', function ($scope) {
+.controller('LibraryCtrl', ['$scope', 'data', function ($scope, data) {
+	// Se guarda la variable data.
+	$scope.data = data;
+	
 	// Variables
 	$scope.subtitle = "Last Reviewed";
 	$scope.elements = [
@@ -53,10 +67,11 @@ angular.module('App.controllers', [])
 		{id:"3", name:"LR3.otro", type:"folder"},
 		{id:"4", name:"LR4.pdf", type:"folder"}
 	];
-    $scope.clase = 'list';
+	$scope.clase = 'icons';
 	
 	// Funciones
 	$scope.searchDocumentFolder = function(departmentId, departmentName) {
+		$scope.data.hideMenu = true;
 		$scope.subtitle = departmentName;
 		$scope.elements = [];
 		var pos = 0;
@@ -69,6 +84,7 @@ angular.module('App.controllers', [])
 	}
 	
 	$scope.searchDocuments = function(documentFolderId, documentFolderName) {
+		$scope.data.hideMenu = true;
 		$scope.subtitle = documentFolderName;
 		$scope.elements = [];
 		var pos = 0;

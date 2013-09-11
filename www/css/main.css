@@ -354,3 +354,12 @@ hr.separator-2{
 	//background: transparent url('../img/img-sprite.png') no-repeat;
 	//background-size: 600px;
 }
+
+#topMenu-bar {
+	background: black;
+}
+
+#topMenu-right {
+	width: 90%;
+	background: black;
+}

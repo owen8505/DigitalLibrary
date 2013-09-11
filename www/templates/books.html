@@ -1,17 +1,19 @@
 <div id="content">
 	<hr class="separator-1"/>
+
     <div id="library-tools">
         <div id="search">
             <form id="search-form">
-                <input type="search" placeholder="Search documents">
+                <input type="search" placeholder="Search documents" />
             </form>
         </div>
         <div id="display-buttons">
-            <a href="" title="Grouping View"><span class="icon-icons" ng-click="clase = 'icons'"></span></a>
-            <a href="" title="List View"><span class="icon-menu" ng-click="clase = 'list'"></span></a>
+            <span class="icon-icons" ng-click="clase = 'icons'"></span>
+            <span class="icon-menu" ng-click="clase = 'list'"></span>
         </div>
     </div>
-    <hr class="separator-1"/>
+
+	<hr class="separator-2">
 
 	<div id="info">
 		<h4>{{subtitle}} ({{elements.length}})</h4>
@@ -29,4 +31,4 @@
 			</ng-switch>
 		</div>
 	</div>
-</div>  
+</div>
