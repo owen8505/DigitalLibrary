@@ -2,9 +2,42 @@
 	<hr class="separator-1"/>
 
     <div id="library-tools">
-        <div id="search">
+    	<div id="search" ng-hide="data.folderFilter.hide">
+    		<input type="search" placeholder="Keywords" ng-model="data.folderFilter.text" />
+    		<span ng-click="filterFolders()">GO</span>
+    	</div>
+        <div id="search" ng-hide="data.documentFilter.hide">
             <form id="search-form">
-                <input type="search" placeholder="Search documents" />
+				<select id="filters-select" ng-model="data.documentFilter.type">
+					<option value="all">All</option>
+					<option value="projectCode">Project Code</option>
+					<option value="acquisitionID">Acquisition ID</option>
+					<option value="referenceID">Reference ID</option>
+					<option value="pr">PR</option>
+					<option value="po">PO</option>
+					<option value="agency">Agency</option>
+					<option value="recipient">Recipient</option>
+					<option value="subrecipient">Subrecipient</option>
+					<option value="country">Country</option>
+				</select>
+				
+                <input type="search" placeholder="Keywords" ng-model="data.documentFilter.text" ng-hide="data.documentFilter.type == 'agency' || data.documentFilter.type == 'country'" />
+                <select ng-model="data.documentFilter.agency" ng-show="data.documentFilter.type == 'agency'">
+					<option value="all">Select an agency</option>
+					<option value="1">Agency 1</option>
+					<option value="2">Agency 2</option>
+					<option value="3">Agency 3</option>
+					<option value="4">Agency 4</option>
+				</select>
+				<select ng-model="data.documentFilter.country" ng-show="data.documentFilter.type == 'country'">
+					<option value="all">Select an country</option>
+					<option value="1">Country 1</option>
+					<option value="2">Country 2</option>
+					<option value="3">Country 3</option>
+					<option value="4">Country 4</option>
+				</select>
+				
+				<span ng-click="filterDocuments()">GO</span>
             </form>
         </div>
         <div id="display-buttons">
@@ -13,7 +46,7 @@
         </div>
     </div>
 
-	<hr class="separator-2">
+	<hr class="separator-1">
 
 	<div id="info">
 		<h4>{{subtitle}} ({{elements.length}})</h4>

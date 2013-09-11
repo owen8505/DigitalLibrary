@@ -2,6 +2,17 @@ angular.module('App.controllers', [])
 .factory('data', [function() {
 	var data = {};
 	data.hideMenu = true;
+	data.folderFilter = {
+		text : "",
+		hide : false
+	};
+	data.documentFilter = {
+		text : "",
+		type : "all",
+		agency : "all",
+		country : "all",
+		hide : true
+	};
 	return data;
 }])
 .controller('LoginCtrl', ['$scope', '$location', 'data', function ($scope, $location, data) {
@@ -72,6 +83,9 @@ angular.module('App.controllers', [])
 	// Funciones
 	$scope.searchDocumentFolder = function(departmentId, departmentName) {
 		$scope.data.hideMenu = true;
+		$scope.data.folderFilter.hide = false;
+		$scope.data.documentFilter.hide = true;
+		
 		$scope.subtitle = departmentName;
 		$scope.elements = [];
 		var pos = 0;
@@ -85,6 +99,9 @@ angular.module('App.controllers', [])
 	
 	$scope.searchDocuments = function(documentFolderId, documentFolderName) {
 		$scope.data.hideMenu = true;
+		$scope.data.folderFilter.hide = true;
+		$scope.data.documentFilter.hide = false;
+		
 		$scope.subtitle = documentFolderName;
 		$scope.elements = [];
 		var pos = 0;
@@ -94,5 +111,12 @@ angular.module('App.controllers', [])
 				$scope.elements[pos++] = {id:"" + random, name: "" + documentFolderName + random, type:"document-1"};
 			}
 		}
+	}
+	
+	$scope.filterFolders = function () {
+		alert('Filtrando folders por ' + $scope.data.folderFilter.text);
+	}
+	$scope.filterDocuments = function () {
+		alert('Filtrando documentos por ' + $scope.data.documentFilter.type + ', ' + $scope.data.documentFilter.text);
 	}
 }]);
