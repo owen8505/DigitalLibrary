@@ -2,11 +2,11 @@
 	<hr class="separator-1"/>
 
     <div id="library-tools">
-    	<div id="search" ng-hide="data.folderFilter.hide">
+    	<div id="search-folders" class="search" ng-hide="data.folderFilter.hide">
     		<input type="search" placeholder="Keywords" ng-model="data.folderFilter.text" />
     		<span ng-click="filterFolders()">GO</span>
     	</div>
-        <div id="search" ng-hide="data.documentFilter.hide">
+        <div id="search-documents" class="search" ng-hide="data.documentFilter.hide">
             <form id="search-form">
 				<select id="filters-select" ng-model="data.documentFilter.type">
 					<option value="all">All</option>

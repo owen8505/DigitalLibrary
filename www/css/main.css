@@ -171,6 +171,10 @@ h1, h2, h3, h4, h5, h6{
 
 }
 
+ul {
+	list-style-type: none;
+}
+
 header{
 	margin: 0 auto;
 	padding: 0.5rem 0rem 0.2rem;
@@ -260,21 +264,25 @@ hr.separator-2{
     overflow: hidden;
 }
 
-#library-tools #search {
+#library-tools .search {
     float: left;
     width: 85%;
     height: 2.5rem;
 }
 
-#library-tools #search select, #library-tools #search input {
+#library-tools .search select, #library-tools .search input {
 	display: inline-block;
     height: 1.3rem;
     width: 50%;
     vertical-align: top;
 }
 
-#library-tools #search select#filters-select {
+#library-tools .search select#filters-select {
     width: 6rem;
+}
+
+#library-tools #search-folders input {
+	width: 85%;
 }
 
 #library-tools #display-buttons {
@@ -390,8 +398,39 @@ hr.separator-2{
 	background: black;
     text-align: left;
     padding-top: 1rem;
+    
+    overflow: none;
+    overflow-y: auto;
 }
-
 #topMenu-right .clickable:hover {
 	background: #444444;
+}
+
+ul.nav-department{
+	margin: 1rem;
+	padding: 0px;
+}
+
+ul.nav-department > li{
+	color: #707777;
+	font-size: 1rem;
+	font-weight: normal;
+	padding: 0.5rem 1.5rem 0.8rem;
+	text-transform: uppercase;
+}
+
+ul.nav-department  ul.nav-functional-area{
+	color: #b8bbbb;
+	font-size: 0.9rem;
+	font-weight: 300;
+	margin-left: 0px;
+	text-transform: none;
+}
+
+ul.nav-department  ul.nav-functional-area span{
+	color: #b8bbbb;
+}
+
+ul.nav-department  ul.nav-functional-area li{
+	margin: 0.2rem 0.2rem 0.3rem;
 }
