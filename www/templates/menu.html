@@ -3,12 +3,13 @@
 		<span class="title">Digital Library</span>
 		<span class="menu-btn" ng-click="data.hideMenu = !data.hideMenu">Menu</span>
 	<nav>
-	<div id="topMenu-right" ng-hide="data.hideMenu" style="color: red;">
+	<div id="topMenu-right" ng-hide="data.hideMenu">
 		<ul class="nav-department">
 			<li ng-click="searchDocumentFolder(0, 'Last Reviewed')">
 				<span><span class="icon-star"></span> Last Reviewed</span>
 			</li>
 			<li ng-repeat="department in menu" ng-hide="department.functionalArea.length == 0">
+                <hr class="separator-1" />
 				<span><span class="icon-books"></span> {{department.name}}</span>
 				<ul class="nav-functonal-area">
 					<li ng-repeat="fa in department.functionalArea">
