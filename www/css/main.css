@@ -27,7 +27,7 @@ Instead of a list of all class selectors,
 you can use the generic selector below, but it's slower:
 [class*="icon-"] {
 */
-.icon-search, .icon-star, .icon-star-2, .icon-star-3, .icon-lock, .icon-unlocked, .icon-envelope, .icon-home, .icon-remove, .icon-attachment, .icon-info, .icon-menu, .icon-warning, .icon-user, .icon-icons, .icon-link, .icon-help, .icon-ellipsis, .icon-arrow-right, .icon-arrow-left, .icon-arrow-down, .icon-arrow-up, .icon-file-word, .icon-file-excel, .icon-file-powerpoint, .icon-file-pdf, .icon-books, .icon-book, .icon-bookmark, .icon-cloud-dl, .icon-filter {
+.icon-search, .icon-star, .icon-star-2, .icon-star-3, .icon-lock, .icon-unlocked, .icon-envelope, .icon-home, .icon-remove, .icon-attachment, .icon-info, .icon-menu, .icon-warning, .icon-user, .icon-icons, .icon-link, .icon-help, .icon-ellipsis, .icon-arrow-right, .icon-arrow-left, .icon-arrow-down, .icon-arrow-up, .icon-file-word, .icon-file-excel, .icon-file-powerpoint, .icon-file-pdf, .icon-books, .icon-book, .icon-bookmark, .icon-cloud-dl, .icon-filter, .icon-list, .icon-list-2 {
 	font-family: 'icomoon';
 	speak: none;
 	font-style: normal;
@@ -130,6 +130,12 @@ you can use the generic selector below, but it's slower:
 .icon-filter:before {
 	content: "\e05f";
 }
+.icon-list:before {
+	content: "\e001";
+}
+.icon-list-2:before {
+	content: "\e002";
+}
 
 * {
     -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
@@ -150,7 +156,7 @@ you can use the generic selector below, but it's slower:
 }
 
 body,html{
-	background: #3d3d3d url('../img/low_contrast_linen_@2X.png') repeat top left;
+	background: #fff;
 	background-size: 100%;
 	margin: 0;
 	padding: 0;
@@ -212,13 +218,15 @@ hr.separator-2{
 /*** LOGIN ***/
 
 #login {
-    width: 90%;
-    height: 100%;
+    width: 100%;
+    padding-left: 5%;
+    padding-right: 5%;
     margin: 0 auto;
+    background: #000;
 }
 
 #login-container {
-    background: #000;
+    background: #2A2A2A;
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border-radius: 8px;

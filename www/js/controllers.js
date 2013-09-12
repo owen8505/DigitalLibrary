@@ -38,6 +38,9 @@ angular.module('App.controllers', [])
 			}
 		}
 	};
+                          
+    $scope.changeBackground = function () {
+    };
 }])
 .controller('MenuCtrl', ['$scope', 'data', function ($scope, data) {
 	// Se guarda la variable data.
