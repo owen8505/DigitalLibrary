@@ -2,20 +2,20 @@
 	<hr class="separator-1"/>
 
     <div id="library-tools">
-    	<div id="search-folders" ng-hide="data.folderFilter.hide">
-    		<input type="search" placeholder="Keywords" ng-model="data.folderFilter.text" />
+    	<div id="search-folders">
+    		<input type="search" placeholder="Search documents" ng-model="data.filter" />
     	</div>
     </div>
 
 	<hr class="separator-1">
 
 	<div id="info">
-		<h4>{{subtitle}} ({{elements.length}})</h4>
+		<h4><span ng-click="searchDocumentFolder(data.breadcrumb.departmentId, data.breadcrumb.departmentName)">{{data.breadcrumb.departmentName}}</span> <span ng-hide="data.breadcrumb.folderId == 0" ng-click="searchDocuments(data.breadcrumb.folderId, data.breadcrumb.folderName)">&gt; {{data.breadcrumb.folderName}}</span> ({{data.breadcrumb.totalElements}})</h4>
 		<hr class="separator-10">
 		<div id="tools" class="columns-12">
 			<div id="search-filter">
 				<form id="search-filter-form">
-					<input type="search" placeholder="Type a keyword">
+					<input type="search" placeholder="Filter by keywords" ng-model="data.resultFilter">
 				</form>
 			</div>
             <span class="icon-icons layout-btn" ng-click="clase = 'icons'"></span>&nbsp;

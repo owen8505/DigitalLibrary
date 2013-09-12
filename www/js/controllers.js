@@ -2,28 +2,18 @@ angular.module('App.controllers', [])
 .factory('data', [function() {
 	var data = {};
 	data.hideMenu = true;
-	data.folderFilter = {
-		text : "",
-		hide : false
-	};
-	data.documentFilter = {
-		text : "",
-		type : "all",
-		agency : "all",
-		country : "all",
-		hide : true
-	};
+	data.filter = "";
+	data.resultFilter = "";
+	data.breadcrumb = {
+		departmentId : 0,
+		departmentName : "",
+		folderId : 0,
+		folderName : "",
+		totalElements : 0
+	}
 	return data;
 }])
-.controller('LoginCtrl', ['$scope', '$location', '$document', 'data', function ($scope, $location, $document, data) {
-	// Se guarda la variable data.
-	$scope.data = data;
-	
-	// Variables
-	$scope.title = 'Digital Library';
-	$scope.connecting = 'Connecting to Device';
-	$scope.ready = 'Device is Ready';
-	
+.controller('LoginCtrl', ['$scope', '$location', function ($scope, $location) {
 	// Funciones
 	$scope.login = function(user) {
 		if (user.username == undefined) {
@@ -68,14 +58,15 @@ angular.module('App.controllers', [])
 			{id:"10", name: "COR"},
 			{id:"11", name: "Grants"}
 		]}
-	]
+	];
 }])
 .controller('LibraryCtrl', ['$scope', 'data', function ($scope, data) {
 	// Se guarda la variable data.
 	$scope.data = data;
 	
 	// Variables
-	$scope.subtitle = "Last Reviewed";
+	$scope.data.breadcrumb.departmentId = 0;
+	$scope.data.breadcrumb.departmentName = "Last Reviewed";
 	$scope.elements = [
 		{id:"1", name:"LR1.pdf", type:"folder"},
 		{id:"2", name:"LR2.xls", type:"folder"},
@@ -87,10 +78,12 @@ angular.module('App.controllers', [])
 	// Funciones
 	$scope.searchDocumentFolder = function(departmentId, departmentName) {
 		$scope.data.hideMenu = true;
-		$scope.data.folderFilter.hide = false;
-		$scope.data.documentFilter.hide = true;
+		$scope.data.breadcrumb.departmentId = departmentId;
+		$scope.data.breadcrumb.departmentName = departmentName;
+		$scope.data.breadcrumb.folderId = 0;
+		$scope.data.breadcrumb.folderName = "";
+		$scope.data.breadcrumb.totalElements = 10;
 		
-		$scope.subtitle = departmentName;
 		$scope.elements = [];
 		var pos = 0;
 		for (var i = 0; i < 5; i++) {
@@ -103,10 +96,10 @@ angular.module('App.controllers', [])
 	
 	$scope.searchDocuments = function(documentFolderId, documentFolderName) {
 		$scope.data.hideMenu = true;
-		$scope.data.folderFilter.hide = true;
-		$scope.data.documentFilter.hide = false;
+		$scope.data.breadcrumb.folderId = documentFolderId;
+		$scope.data.breadcrumb.folderName = documentFolderName;
+		$scope.data.breadcrumb.totalElements = 100;
 		
-		$scope.subtitle = documentFolderName;
 		$scope.elements = [];
 		var pos = 0;
 		for (var i = 0; i < 10; i++) {
