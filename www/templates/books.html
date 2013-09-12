@@ -4,64 +4,37 @@
     <div id="library-tools">
     	<div id="search-folders" class="search" ng-hide="data.folderFilter.hide">
     		<input type="search" placeholder="Keywords" ng-model="data.folderFilter.text" />
-    		<span ng-click="filterFolders()">GO</span>
     	</div>
-        <div id="search-documents" class="search" ng-hide="data.documentFilter.hide">
-            <form id="search-form">
-				<select id="filters-select" ng-model="data.documentFilter.type">
-					<option value="all">All</option>
-					<option value="projectCode">Project Code</option>
-					<option value="acquisitionID">Acquisition ID</option>
-					<option value="referenceID">Reference ID</option>
-					<option value="pr">PR</option>
-					<option value="po">PO</option>
-					<option value="agency">Agency</option>
-					<option value="recipient">Recipient</option>
-					<option value="subrecipient">Subrecipient</option>
-					<option value="country">Country</option>
-				</select>
-				
-                <input type="search" placeholder="Keywords" ng-model="data.documentFilter.text" ng-hide="data.documentFilter.type == 'agency' || data.documentFilter.type == 'country'" />
-                <select ng-model="data.documentFilter.agency" ng-show="data.documentFilter.type == 'agency'">
-					<option value="all">Select an agency</option>
-					<option value="1">Agency 1</option>
-					<option value="2">Agency 2</option>
-					<option value="3">Agency 3</option>
-					<option value="4">Agency 4</option>
-				</select>
-				<select ng-model="data.documentFilter.country" ng-show="data.documentFilter.type == 'country'">
-					<option value="all">Select an country</option>
-					<option value="1">Country 1</option>
-					<option value="2">Country 2</option>
-					<option value="3">Country 3</option>
-					<option value="4">Country 4</option>
-				</select>
-				
-				<span ng-click="filterDocuments()">GO</span>
-            </form>
-        </div>
-        <div id="display-buttons">
-            <span class="icon-icons" ng-click="clase = 'icons'"></span>
-            <span class="icon-menu" ng-click="clase = 'list'"></span>
-        </div>
     </div>
 
 	<hr class="separator-1">
 
 	<div id="info">
 		<h4>{{subtitle}} ({{elements.length}})</h4>
-        <br/>
-		<div ng-repeat="element in elements" ng-class="clase" class="documento-info">
-			<ng-switch on="element.type">
-				<div ng-switch-when="folder" ng-click="searchDocuments(element.id, element.name)">
-					<div class="folder-image"></div>
-					<div class="document-title">{{element.name}}</div>
-				</div>
-				<div ng-switch-default>
-					<div class="document-image"></div>
-					<div class="document-title">{{element.name}}</div>
-				</div>
-			</ng-switch>
+		<hr class="separator-10">
+		<div id="tools" class="columns-12">
+			<div id="search-filter">
+				<form id="search-filter-form">
+					<input type="search" placeholder="Type a keyword">
+				</form>
+			</div>
+            <span class="icon-icons" ng-click="clase = 'icons'"></span>
+            <span class="icon-menu" ng-click="clase = 'list'"></span>                     
+			<div class="clear"></div>
+		</div>
+		<div id="elements">
+			<div ng-repeat="element in elements" ng-class="clase" class="documento-info">
+				<ng-switch on="element.type">
+					<div ng-switch-when="folder" ng-click="searchDocuments(element.id, element.name)">
+						<div class="folder-image"></div>
+						<div class="document-title">{{element.name}}</div>
+					</div>
+					<div ng-switch-default>
+						<div class="document-image"></div>
+						<div class="document-title">{{element.name}}</div>
+					</div>
+				</ng-switch>
+			</div>
 		</div>
 	</div>
 </div>
