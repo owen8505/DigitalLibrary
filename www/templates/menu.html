@@ -1,7 +1,11 @@
 <div id="topMenu" class="sticky fixed show-for-small">
 	<nav id="topMenu-bar">
 		<span class="title">Digital Library</span>
-		<span class="menu-btn" ng-click="data.hideMenu = !data.hideMenu">Menu</span>
+		<span id="menu-btn-container">
+            <span id="menu-btn" ng-click="data.hideMenu = !data.hideMenu">
+                Menu
+            </span>
+        </span>
 	<nav>
 	<div id="topMenu-right" ng-hide="data.hideMenu">
 		<h3>Departments</h3>

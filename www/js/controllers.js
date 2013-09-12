@@ -15,7 +15,7 @@ angular.module('App.controllers', [])
 	};
 	return data;
 }])
-.controller('LoginCtrl', ['$scope', '$location', 'data', function ($scope, $location, data) {
+.controller('LoginCtrl', ['$scope', '$location', '$document', 'data', function ($scope, $location, $document, data) {
 	// Se guarda la variable data.
 	$scope.data = data;
 	
@@ -40,6 +40,7 @@ angular.module('App.controllers', [])
 	};
                           
     $scope.changeBackground = function () {
+         //alert(angular.element($document[0].body));
     };
 }])
 .controller('MenuCtrl', ['$scope', 'data', function ($scope, data) {

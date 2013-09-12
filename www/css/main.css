@@ -242,8 +242,15 @@ hr.separator-2{
     padding-top: 1rem;
 }
 
-#login-button {
-    margin: 0 auto;
+#login-btn {
+    background: #4A4A4A;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    height: 1.5rem;
+    width: 4rem;
+    text-align: center;
+    padding-top: 0.2rem;
 }
 
 .css-form input.ng-invalid.ng-dirty {
@@ -276,39 +283,13 @@ hr.separator-2{
     overflow: hidden;
 }
 
-#library-tools .search {
-    float: left;
-    width: 85%;
-    height: 2.5rem;
-}
-
-#library-tools .search select, #library-tools .search input {
-	display: inline-block;
-    height: 1.3rem;
-    width: 50%;
-    vertical-align: top;
-}
-
-#library-tools .search select#filters-select {
-    width: 6rem;
+#library-tools #search-folders {
+    padding-left: 3%;
 }
 
 #library-tools #search-folders input {
-	width: 85%;
-}
-
-#library-tools #display-buttons {
-    float: right;
-    width: 15%;
-    height: 1.5rem;
-    text-align: right;
-    padding-top: 0.2rem;
-    padding-right: 0.3rem;
-}
-
-#display-buttons span {
-    font-size: 1.1rem;
-    color: #fff;
+    height: 1.3rem;
+    width: 97%;
 }
 
 #info {
@@ -318,6 +299,7 @@ hr.separator-2{
 
 #info h4 {
 	margin: 0.65rem 0rem;
+    padding-left: 3%;
 }
 
 #search-filter-form{
@@ -356,6 +338,10 @@ hr.separator-2{
 
 #elements {
     padding-left: 2.5rem;
+}
+
+.layout-btn {
+    font-size: 0.8rem;
 }
 
 .icons {
@@ -440,10 +426,26 @@ hr.separator-2{
     width: 50%;
 }
 
-#topMenu-bar .menu-btn {
+#menu-btn-container {
     display: inline-block;
     width: 25%;
+}
+
+#menu-btn {
     font-size: 0.7rem;
+    background: #2a2a2a;
+    color: #d3d3d3;
+
+    text-align: center;
+    padding: 0.2rem 0.2rem 0.2rem 0.2rem;
+    
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #333;
+    
 }
 
 #topMenu-right {
