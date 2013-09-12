@@ -10,7 +10,15 @@
 	<hr class="separator-1">
 
 	<div id="info">
-		<h4><span ng-click="searchDocumentFolder(data.breadcrumb.departmentId, data.breadcrumb.departmentName)">{{data.breadcrumb.departmentName}}</span> <span ng-hide="data.breadcrumb.folderId == 0" ng-click="searchDocuments(data.breadcrumb.folderId, data.breadcrumb.folderName)">&gt; {{data.breadcrumb.folderName}}</span> ({{data.breadcrumb.totalElements}})</h4>
+		<h4>
+            <div class="breadcrumb-department" ng-click="searchDocumentFolder(data.breadcrumb.departmentId, data.breadcrumb.departmentName)">
+                {{data.breadcrumb.departmentName}}
+            </div>
+            <div class="breadcrumb-folder" ng-hide="data.breadcrumb.folderId == 0" ng-click="searchDocuments(data.breadcrumb.folderId, data.breadcrumb.folderName)">
+                <div class="folder-image"></div>
+                {{data.breadcrumb.folderName}} ({{data.breadcrumb.totalElements}})
+            </div>
+        </h4>
 		<hr class="separator-10">
 		<div id="tools" class="columns-12">
 			<div id="search-filter">

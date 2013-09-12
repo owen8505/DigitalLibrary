@@ -8,16 +8,16 @@
         </span>
 	<nav>
 	<div id="topMenu-right" ng-hide="data.hideMenu">
-		<h3>Departments</h3>
 		<ul class="nav-department">
 			<li ng-click="searchDocumentFolder(0, 'Last Reviewed')">
 				<span><span class="icon-star"></span> Last Reviewed</span>
 			</li>
 			<li ng-repeat="department in menu" ng-hide="department.functionalArea.length == 0">
+                <hr class="separator-1">
 				<span><span class="icon-books"></span> {{department.name}}</span>
 				<ul class="nav-functional-area">
 					<li ng-repeat="fa in department.functionalArea">
-						<span ng-click="searchDocumentFolder(fa.id, fa.name)">{{fa.name}}</span>
+						<div ng-click="searchDocumentFolder(fa.id, fa.name)">{{fa.name}}</div>
 					</li>
 				</ul>
 			</li>                 
@@ -33,7 +33,9 @@
 			<li ng-repeat="department in menu" ng-hide="department.functionalArea.length == 0">
 				<span class="icon-books"></span> {{department.name}}
 				<ul class="nav-functional-area">
-					<li ng-repeat="fa in department.functionalArea"><span ng-click="searchDocumentFolder(fa.id, fa.name)">{{fa.name}}</span></li>
+					<li ng-repeat="fa in department.functionalArea">
+                        <div ng-click="searchDocumentFolder(fa.id, fa.name)">{{fa.name}}</div>
+                    </li>
 				</ul>
 			</li>
 		</ul>

@@ -222,7 +222,11 @@ hr.separator-2{
 /*** LOGIN ***/
 
 #login {
-    width: 100%;
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
     padding-left: 5%;
     padding-right: 5%;
     margin: 0 auto;
@@ -240,6 +244,7 @@ hr.separator-2{
     width: 90%;
     margin: 0 auto;
     padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
 #login-btn {
@@ -300,6 +305,23 @@ hr.separator-2{
 #info h4 {
 	margin: 0.65rem 0rem;
     padding-left: 3%;
+}
+
+.breadcrumb-department {
+	
+}
+
+.breadcrumb-folder {
+    font-size: 0.8rem;
+}
+
+.breadcrumb-folder .folder-image{
+	background: transparent url('../img/folder.png') no-repeat;	
+    background-size: 20px 24px;
+	display: inline-block;
+	height: 18px;
+	width: 15px;
+    border-width: 0px;
 }
 
 #search-filter-form{
@@ -364,7 +386,7 @@ hr.separator-2{
     display: inline-block !important;
 }
 
-.list .folder-image{
+.list .folder-image {
 	background: transparent url('../img/folder.png') no-repeat;	
     background-size: 20px 24px;
 	display: inline-block;
@@ -373,13 +395,18 @@ hr.separator-2{
     border-width: 0px;
 }
 
-.list .document-image{
+.list .document-image {
 	background: transparent url('../img/documento.png') no-repeat;	
     background-size: 20px 24px;
 	display: inline-block;
 	height: 24px;
 	width: 20px;
     border-width: 0px;
+}
+
+.list .document-title {
+    max-width: 240px;
+    overflow: hidden;
 }
 
 .folder-image{
@@ -449,10 +476,13 @@ hr.separator-2{
 }
 
 #topMenu-right {
-	width: 100%;
+	position: fixed;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    top: 2rem;
 	background: black;
     text-align: left;
-    padding-top: 1rem;
     
     overflow: none;
     overflow-y: auto;
@@ -470,20 +500,18 @@ ul.nav-department > li{
 	color: #707777;
 	font-size: 1rem;
 	font-weight: normal;
-	padding: 0.5rem 1.5rem 0.8rem;
 	text-transform: uppercase;
 }
 
 ul.nav-department  ul.nav-functional-area{
-	color: #b8bbbb;
-	font-size: 0.9rem;
-	font-weight: 300;
 	margin-left: 0px;
 	text-transform: none;
 }
 
-ul.nav-department  ul.nav-functional-area span{
-	color: #b8bbbb;
+ul.nav-department  ul.nav-functional-area div{
+	color: #fff;
+    font-size: 0.9rem;
+	font-weight: 500;
 }
 
 ul.nav-department  ul.nav-functional-area li{
