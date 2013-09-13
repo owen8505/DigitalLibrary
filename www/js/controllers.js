@@ -102,6 +102,7 @@ angular.module('App.controllers', ['ngResource'])
 	$scope.data.breadcrumb.departmentId = 0;
 	$scope.data.breadcrumb.departmentName = "Last Viewed";
 	$scope.elements = $scope.data.getCache('last_viewed');
+	$scope.data.breadcrumb.totalElements = $scope.elements.length;
 	$scope.clase = 'icons';
 	
 	// Funciones
@@ -111,7 +112,6 @@ angular.module('App.controllers', ['ngResource'])
 		$scope.data.breadcrumb.departmentName = departmentName;
 		$scope.data.breadcrumb.folderId = 0;
 		$scope.data.breadcrumb.folderName = "";
-		$scope.data.breadcrumb.totalElements = 10;
 		
 		$scope.elements = [];
 		var pos = 0;
@@ -121,6 +121,7 @@ angular.module('App.controllers', ['ngResource'])
 				$scope.elements[pos++] = {id:"" + random, name: "" + departmentName + random, type:"folder"};
 			}
 		}
+		$scope.data.breadcrumb.totalElements = $scope.elements.length;
 		
 		if (departmentId == 0) {
 			$scope.elements = $scope.data.getCache('last_viewed');
@@ -132,7 +133,6 @@ angular.module('App.controllers', ['ngResource'])
 		$scope.data.hideMenu = true;
 		$scope.data.breadcrumb.folderId = documentFolderId;
 		$scope.data.breadcrumb.folderName = documentFolderName;
-		$scope.data.breadcrumb.totalElements = 100;
 		
 		$scope.elements = [];
 		var pos = 0;
@@ -142,6 +142,7 @@ angular.module('App.controllers', ['ngResource'])
 				$scope.elements[pos++] = {id:"" + random, name: "" + documentFolderName + random, type:"document-1"};
 			}
 		}
+		$scope.data.breadcrumb.totalElements = $scope.elements.length;
 	}
 	
 	$scope.downloadDocument = function(document) {

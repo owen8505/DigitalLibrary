@@ -12,7 +12,7 @@
 	<div id="info">
 		<h4>
             <div class="breadcrumb-department" ng-click="searchDocumentFolder(data.breadcrumb.departmentId, data.breadcrumb.departmentName)">
-                {{data.breadcrumb.departmentName}}
+                {{data.breadcrumb.departmentName}} <span ng-hide="data.breadcrumb.folderId != 0">({{data.breadcrumb.totalElements}})</span>
             </div>
             <div class="breadcrumb-folder" ng-hide="data.breadcrumb.folderId == 0" ng-click="searchDocuments(data.breadcrumb.folderId, data.breadcrumb.folderName)">
                 <div class="folder-image"></div>
