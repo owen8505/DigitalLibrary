@@ -1,4 +1,4 @@
-angular.module('App.controllers', [])
+angular.module('App.controllers', ['ngResource'])
 .factory('data', [function() {
 	var data = {};
 	data.hideMenu = true;
@@ -10,6 +10,21 @@ angular.module('App.controllers', [])
 		folderId : 0,
 		folderName : "",
 		totalElements : 0
+	}
+	data.setCache = function (key, value) {
+		window.localStorage.setItem(key, JSON.stringify(value));
+	}
+	data.getCache = function (key) {
+		return JSON.parse(window.localStorage.getItem(key));
+	}
+	data.isCache = function (key) {
+		return window.localStorage.getItem(key) !== null;
+	}
+	data.removeCache = function (key) {
+		window.localStorage.removeItem(key);
+	}
+	if (!data.isCache('last_viewed')) {
+		data.setCache('last_viewed', []);
 	}
 	return data;
 }])
@@ -29,7 +44,7 @@ angular.module('App.controllers', [])
 		}
 	};
 }])
-.controller('MenuCtrl', ['$scope', 'data', function ($scope, data) {
+.controller('MenuCtrl', ['$scope', '$resource', '$http', '$q','data', function ($scope, $resource, $http, $q, data) {
 	// Se guarda la variable data.
 	$scope.data = data;
 	
@@ -55,6 +70,29 @@ angular.module('App.controllers', [])
 			{id:"11", name: "Grants"}
 		]}
 	];
+	
+	$http.defaults.headers.common.Authorization = 'Basic ' + btoa('supportserver\lopeze' + ':' + '@P4ssw0rd!');
+	var deferred = $q.defer();
+	var MenuService = $resource(
+		"http://samepage.mexusbio.org/sites/DigitalLibrary/_vti_bin/INL.Mexico.Services/DigitalLibrary.svc/Menu/supportserver%20lopeze",
+		//"http://samepage.mexusbio.org/",
+		//"http://httpbin.org/post",
+		//"http://httpbin.org/basic-auth/supportserver\lopeze/@P4ssw0rd!",
+		{}
+	).get(
+		{},
+		function (event) {
+			deferred.resolve(event);
+		},
+		function (response) {
+			deferred.reject(response);
+		}
+	);
+	var MenuServicePromise = deferred.promise;
+	MenuServicePromise.then(
+		function(event) {alert('Success: ' + JSON.stringify(event)); },
+		function(response) {alert('Error: ' + JSON.stringify(response)); }
+	);
 }])
 .controller('LibraryCtrl', ['$scope', 'data', function ($scope, data) {
 	// Se guarda la variable data.
@@ -62,13 +100,8 @@ angular.module('App.controllers', [])
 	
 	// Variables
 	$scope.data.breadcrumb.departmentId = 0;
-	$scope.data.breadcrumb.departmentName = "Last Reviewed";
-	$scope.elements = [
-		{id:"1", name:"LR1.pdf", type:"folder"},
-		{id:"2", name:"LR2.xls", type:"folder"},
-		{id:"3", name:"LR3.otro", type:"folder"},
-		{id:"4", name:"LR4.pdf", type:"folder"}
-	];
+	$scope.data.breadcrumb.departmentName = "Last Viewed";
+	$scope.elements = $scope.data.getCache('last_viewed');
 	$scope.clase = 'icons';
 	
 	// Funciones
@@ -88,6 +121,11 @@ angular.module('App.controllers', [])
 				$scope.elements[pos++] = {id:"" + random, name: "" + departmentName + random, type:"folder"};
 			}
 		}
+		
+		if (departmentId == 0) {
+			$scope.elements = $scope.data.getCache('last_viewed');
+			$scope.data.breadcrumb.totalElements = $scope.elements.length;
+		}
 	}
 	
 	$scope.searchDocuments = function(documentFolderId, documentFolderName) {
@@ -104,6 +142,23 @@ angular.module('App.controllers', [])
 				$scope.elements[pos++] = {id:"" + random, name: "" + documentFolderName + random, type:"document-1"};
 			}
 		}
+	}
+	
+	$scope.downloadDocument = function(document) {
+		var last_viewed = $scope.data.getCache('last_viewed');
+		var arreglo = [];
+		var i = 0;
+		arreglo[i++] = document;
+		for (j = 0; j < last_viewed.length; j++) {
+			if (i < 10) {
+				if (last_viewed[j].id != document.id) {
+					arreglo[i++] = last_viewed[j];
+				}
+			} else {
+				break;
+			}
+		}
+		$scope.data.setCache('last_viewed', arreglo);
 	}
 	
 	$scope.filterFolders = function () {
