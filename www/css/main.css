@@ -370,10 +370,18 @@ hr.separator-2{
     display: inline-block;
     margin-right: 2.5rem;
     text-align: center;
+    width: 6.3rem;
 }
 
-.icons div {
-    width: 6.3rem;
+.icons .document-image .icon-download-document{
+    position: absolute;
+	top: 8%;
+    right: 20%;
+    font-size: 0.9rem;
+}
+
+.icons .document-title {
+    text-overflow: ellipsis;
     overflow: hidden;
 }
 
@@ -404,12 +412,18 @@ hr.separator-2{
     border-width: 0px;
 }
 
+.list .document-image .icon-download-document{
+    display: none;
+}
+
 .list .document-title {
     max-width: 240px;
+    text-overflow: ellipsis;
     overflow: hidden;
 }
 
 .folder-image{
+    position: relative;
 	background: transparent url('../img/folder.png') no-repeat;	
     background-size: 100px 120px;
 	display: inline-block;
@@ -419,6 +433,7 @@ hr.separator-2{
 }
 
 .document-image{
+    position: relative;
 	background: transparent url('../img/documento.png') no-repeat;
 	background-size: 100px 120px;
 	display: inline-block;
@@ -456,6 +471,7 @@ hr.separator-2{
 #menu-btn-container {
     display: inline-block;
     width: 25%;
+    padding-right: 3%
 }
 
 #menu-btn {
