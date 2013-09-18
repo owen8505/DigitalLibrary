@@ -2,6 +2,7 @@ angular.module('App.controllers', ['ngResource'])
 .factory('data', [function() {
 	var data = {};
 	data.hideMenu = true;
+    data.showLoader = false;
 	data.filter = "";
 	data.resultFilter = "";
 	data.breadcrumb = {
@@ -47,9 +48,10 @@ angular.module('App.controllers', ['ngResource'])
 .controller('MenuCtrl', ['$scope', '$resource', '$http', '$q','data', function ($scope, $resource, $http, $q, data) {
 	// Se guarda la variable data.
 	$scope.data = data;
-	
+    data.showLoader = true;
+                         
 	// Servicio que traería todo el menú
-	$scope.menu = [
+	/*$scope.menu = [
 		{id:"1", name: "Front Office", functionalArea: [
 			{id:"1", name: "Executive Management"}
 		]},
@@ -69,15 +71,16 @@ angular.module('App.controllers', ['ngResource'])
 			{id:"10", name: "COR"},
 			{id:"11", name: "Grants"}
 		]}
-	];
+	];*/
 	
-	$http.defaults.headers.common.Authorization = 'Basic ' + btoa('supportserver\lopeze' + ':' + '@P4ssw0rd!');
+	//$http.defaults.headers.common.Authorization = 'Basic ' + btoa('supportserver\lopeze' + ':' + '@P4ssw0rd!');
 	var deferred = $q.defer();
 	var MenuService = $resource(
-		"http://samepage.mexusbio.org/sites/DigitalLibrary/_vti_bin/INL.Mexico.Services/DigitalLibrary.svc/Menu/supportserver%20lopeze",
+		"http://sap.mexusbio.org/DigitalLibraryServices/SharePointDataAccess.svc/Menu",
 		//"http://samepage.mexusbio.org/",
 		//"http://httpbin.org/post",
 		//"http://httpbin.org/basic-auth/supportserver\lopeze/@P4ssw0rd!",
+        //"http://sap.mexusbio.org/DigitalLibraryServices/SharePointDataAccess.svc/Menu"
 		{}
 	).get(
 		{},
@@ -90,8 +93,12 @@ angular.module('App.controllers', ['ngResource'])
 	);
 	var MenuServicePromise = deferred.promise;
 	MenuServicePromise.then(
-		function(event) {alert('Success: ' + JSON.stringify(event)); },
-		function(response) {alert('Error: ' + JSON.stringify(response)); }
+		function(event) {
+                            $scope.menu = event.GetMenuResult;
+                        },
+		function(response) {
+                            alert('Error: Menu couldn\'t be retrieved');
+                            }
 	);
 }])
 .controller('LibraryCtrl', ['$scope', 'data', function ($scope, data) {

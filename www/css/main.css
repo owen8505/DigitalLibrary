@@ -155,7 +155,7 @@ you can use the generic selector below, but it's slower:
                                    /* offset horizontal: half of text area width */
 }
 
-body,html{
+body,html {
 	background: #fff;
 	background-size: 100%;
 	margin: 0;
@@ -163,7 +163,7 @@ body,html{
 
 }
 
-body{	
+body {	
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
@@ -171,7 +171,7 @@ body{
     color: #fff;
 }
 
-h1, h2, h3, h4, h5, h6{
+h1, h2, h3, h4, h5, h6 {
 	margin: 0;
 	padding: 0;
 
@@ -181,12 +181,12 @@ ul {
 	list-style-type: none;
 }
 
-header{
+header {
 	margin: 0 auto;
 	padding: 0.5rem 0rem 0.2rem;
 }
 
-header h1{
+header h1 {
 	color: #fff;
 	font-size: 2rem;
 	font-weight: 300;
@@ -194,28 +194,38 @@ header h1{
 	text-shadow: black 0.1em 0.1em 0.2em;
 }
 
-hr{
+hr {
 	margin: 0px !important;
 }
 
-hr.separator-1{
+hr.separator-1 {
 	background: transparent url('../img/img-hr-background.png') repeat-x center;
 	border: 0;
 	height: 2px;	
 }
 
-hr.separator-2{
+hr.separator-2 {
 	background: transparent url('../img/img-hr-background-2.png') repeat-x center;
 	border: 0;
 	height: 2px;
 }
 
-.text-bold{
+.text-bold {
 	font-weight: bold;
 }
 
-.clear{
+.clear {
 	clear: both;
+}
+
+#loader {
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background: red;
+    z-index: 100;
 }
 
 
