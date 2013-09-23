@@ -48,7 +48,9 @@ angular.module('App.controllers', ['ngResource'])
 .controller('MenuCtrl', ['$scope', '$resource', '$http', '$q','data', function ($scope, $resource, $http, $q, data) {
 	// Se guarda la variable data.
 	$scope.data = data;
-    data.showLoader = true;
+    $scope.data.showLoader = true;
+                         
+    //var loaderTimeout = $timeout(function() { alert('Error de conexión'); }, 10000);
                          
 	// Servicio que traería todo el menú
 	/*$scope.menu = [
@@ -60,16 +62,6 @@ angular.module('App.controllers', ['ngResource'])
 		]},
 		{id:"3", name: "Program Office", functionalArea: [
 			{id:"3", name: "Project Management"}
-		]},
-		{id:"4", name: "Management", functionalArea: [
-			{id:"4", name: "Office Administration"},
-			{id:"5", name: "Human Resources"},
-			{id:"6", name: "Procurement"},
-			{id:"7", name: "Finances"},
-			{id:"8", name: "Logistics"},
-			{id:"9", name: "IT Support"},
-			{id:"10", name: "COR"},
-			{id:"11", name: "Grants"}
 		]}
 	];*/
 	
@@ -77,10 +69,6 @@ angular.module('App.controllers', ['ngResource'])
 	var deferred = $q.defer();
 	var MenuService = $resource(
 		"http://sap.mexusbio.org/DigitalLibraryServices/SharePointDataAccess.svc/Menu",
-		//"http://samepage.mexusbio.org/",
-		//"http://httpbin.org/post",
-		//"http://httpbin.org/basic-auth/supportserver\lopeze/@P4ssw0rd!",
-        //"http://sap.mexusbio.org/DigitalLibraryServices/SharePointDataAccess.svc/Menu"
 		{}
 	).get(
 		{},
@@ -94,6 +82,8 @@ angular.module('App.controllers', ['ngResource'])
 	var MenuServicePromise = deferred.promise;
 	MenuServicePromise.then(
 		function(event) {
+                            //$timeout.cancel(loaderTimeout);
+                            $scope.data.showLoader = false;
                             $scope.menu = event.GetMenuResult;
                         },
 		function(response) {

@@ -218,14 +218,39 @@ hr.separator-2 {
 	clear: both;
 }
 
-#loader {
+#overlay {
     position: fixed;
     top: 0px;
     bottom: 0px;
     left: 0px;
     right: 0px;
-    background: red;
+    background: black;
     z-index: 100;
+    
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    filter: alpha(opacity=50);
+    -moz-opacity: 0.5;
+    -khtml-opacity: 0.5;
+    opacity: 0.5;
+}
+
+#loader {
+    position: fixed;
+    float: left;
+    width: 40%;
+    height: 15%;
+    background: black;
+    border-radius: 10px;
+    top: 40%;
+    left: 30%;
+    z-index: 101;
+}
+
+#loader img {
+    position: relative;
+    width: 15%;
+    top: 25%;
+    left: 25%;
 }
 
 
