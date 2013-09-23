@@ -45,7 +45,7 @@ angular.module('App.controllers', ['ngResource'])
 		}
 	};
 }])
-.controller('MenuCtrl', ['$scope', '$resource', '$http', '$q','data', function ($scope, $resource, $http, $q, data) {
+.controller('MenuCtrl', ['$scope', '$resource', '$q','data', function ($scope, $resource, $q, data) {
 	// Se guarda la variable data.
 	$scope.data = data;
     $scope.data.showLoader = true;
@@ -91,7 +91,7 @@ angular.module('App.controllers', ['ngResource'])
                             }
 	);
 }])
-.controller('LibraryCtrl', ['$scope', 'data', function ($scope, data) {
+.controller('LibraryCtrl', ['$scope', '$resource', '$q', 'data', function ($scope, $resource, $q, data) {
 	// Se guarda la variable data.
 	$scope.data = data;
 	
@@ -103,12 +103,15 @@ angular.module('App.controllers', ['ngResource'])
 	$scope.clase = 'icons';
 	
 	// Funciones
-	$scope.searchDocumentFolder = function(departmentId, departmentName) {
+	$scope.searchDocumentFolder = function(departmentId, departmentName, departmentUrl) {
 		$scope.data.hideMenu = true;
 		$scope.data.breadcrumb.departmentId = departmentId;
 		$scope.data.breadcrumb.departmentName = departmentName;
+		$scope.data.breadcrumb.departmentUrl = departmentUrl;
 		$scope.data.breadcrumb.folderId = 0;
 		$scope.data.breadcrumb.folderName = "";
+		
+		/**
 		
 		$scope.elements = [];
 		var pos = 0;
@@ -123,6 +126,41 @@ angular.module('App.controllers', ['ngResource'])
 		if (departmentId == 0) {
 			$scope.elements = $scope.data.getCache('last_viewed');
 			$scope.data.breadcrumb.totalElements = $scope.elements.length;
+		}
+		
+		**/
+		
+		if (departmentId == 0) {
+			$scope.elements = $scope.data.getCache('last_viewed');
+			$scope.data.breadcrumb.totalElements = $scope.elements.length;
+		} else {
+			$scope.data.showLoader = true;
+			var deferred = $q.defer();
+			var LibraryService = $resource(
+				"http://sap.mexusbio.org/DigitalLibraryServices/SharePointDataAccess.svc/Libraries?w=:w",
+				{}
+			).get(
+				{
+					w : departmentUrl
+				},
+				function (event) {
+					deferred.resolve(event);
+				},
+				function (response) {
+					deferred.reject(response);
+				}
+			);
+			var LibraryService = deferred.promise;
+			LibraryService.then(
+				function(event) {
+					$scope.elements = event.GetListsResult;
+					$scope.data.breadcrumb.totalElements = $scope.elements.length;
+					$scope.data.showLoader = false;
+				},
+				function(response) {
+					alert('Error: Library couldn\'t be retrieved');
+				}
+			);
 		}
 	}
 	

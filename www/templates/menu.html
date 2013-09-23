@@ -17,7 +17,7 @@
 				<span><span class="icon-books"></span> {{department.name}}</span>
 				<ul class="nav-functional-area">
 					<li ng-repeat="fa in department.functionalArea">
-						<div ng-click="searchDocumentFolder(fa.id, fa.name)">{{fa.name}}</div>
+						<div ng-click="searchDocumentFolder(fa.id, fa.name, fa.url)">{{fa.name}}</div>
 					</li>
 				</ul>
 			</li>                 

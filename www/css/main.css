@@ -415,7 +415,7 @@ hr.separator-2 {
     font-size: 0.9rem;
 }
 
-.icons .document-title {
+.icons .document-title, .icons .folder-title {
     text-overflow: ellipsis;
     overflow: hidden;
 }
@@ -427,6 +427,7 @@ hr.separator-2 {
 
 .list div {
     display: inline-block !important;
+    vertical-align: top;
 }
 
 .list .folder-image {
@@ -436,6 +437,7 @@ hr.separator-2 {
 	height: 24px;
 	width: 20px;
     border-width: 0px;
+    vertical-align: top;
 }
 
 .list .document-image {
@@ -445,16 +447,26 @@ hr.separator-2 {
 	height: 24px;
 	width: 20px;
     border-width: 0px;
+    vertical-align: top;
 }
 
 .list .document-image .icon-download-document{
     display: none;
 }
 
-.list .document-title {
+.list .document-title, .list .folder-title {
     max-width: 240px;
     text-overflow: ellipsis;
     overflow: hidden;
+}
+
+.documento-info {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.list.documento-info {
+	display: block;
 }
 
 .folder-image{
@@ -477,7 +489,7 @@ hr.separator-2 {
     border-width: 0px;
 }
 
-.documento-info .document-title{
+.documento-info .document-title, .documento-info .folder-title{
 	display: block;
 	font-size: 0.8rem;
     margin-bottom: 1rem;

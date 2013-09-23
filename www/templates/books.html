@@ -11,7 +11,7 @@
 
 	<div id="info">
 		<h4>
-            <div class="breadcrumb-department" ng-click="searchDocumentFolder(data.breadcrumb.departmentId, data.breadcrumb.departmentName)">
+            <div class="breadcrumb-department" ng-click="searchDocumentFolder(data.breadcrumb.departmentId, data.breadcrumb.departmentName, data.breadcrumb.departmentUrl)">
                 {{data.breadcrumb.departmentName}} <span ng-hide="data.breadcrumb.folderId != 0">({{data.breadcrumb.totalElements}})</span>
             </div>
             <div class="breadcrumb-folder" ng-hide="data.breadcrumb.folderId == 0" ng-click="searchDocuments(data.breadcrumb.folderId, data.breadcrumb.folderName)">
@@ -35,7 +35,7 @@
 				<ng-switch on="element.type">
 					<div ng-switch-when="folder" ng-click="searchDocuments(element.id, element.name)">
 						<div class="folder-image"></div>
-						<div class="document-title">{{element.name}}</div>
+						<div class="folder-title">{{element.name}}</div>
 					</div>
 					<div ng-switch-default ng-click="downloadDocument(element)">
 						<div class="document-image">
