@@ -282,7 +282,7 @@ hr.separator-2 {
     padding-bottom: 1rem;
 }
 
-#login-btn {
+#save-btn, #login-btn {
     background: #4A4A4A;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;

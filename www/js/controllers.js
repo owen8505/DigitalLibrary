@@ -29,19 +29,30 @@ angular.module('App.controllers', ['ngResource'])
 	}
 	return data;
 }])
-.controller('LoginCtrl', ['$scope', '$location', function ($scope, $location) {
+.controller('LoginCtrl', ['$scope', '$location', 'data', function ($scope, $location, data) {
 	// Funciones
-	$scope.login = function(user) {
-		if (user.username == undefined) {
-			alert('Introduce tu usuario para continuar.');
-		} else if (user.password == undefined) {
-			alert('Introduce tu password para continuar.');
+	$scope.data = data;
+	$scope.newPin = false;
+	if ($scope.data.isCache('pin')) {
+		$scope.message = "Input the pin for the app.";
+	} else {
+		$scope.message = "It's the first time you use the app. Input the pin for the app.";
+		$scope.newPin = true;
+	}
+	$scope.save = function(pin) {
+		if (pin.length == 4) {
+			$scope.data.setCache('pin', pin);
+			$location.path('/library');
 		} else {
-			if (user.username == 'test' && user.password == 'test') {
-				$location.path('/library');
-			} else {
-				alert('Usuario y contraseña inválidos.');
-			}
+			alert("The pin must have 4 digits.");
+		}
+	}
+	$scope.login = function(pin) {
+		var compare = $scope.data.getCache('pin');
+		if (compare == pin) {
+			$location.path('/library');
+		} else {
+			alert('Wrong pin. Try again.');
 		}
 	};
 }])

@@ -8,14 +8,15 @@
     </header>
     <div id="login-container">
         <form id="login-form" name="form" class="css-form" novalidate>
+        	<div>
+        		{{message}}
+        	</div>
             <div id="login-user">
-                Username:
-                <input type="text" id="login_user" name="login_user" ng-model="user.username" autocorrect="off" autocapitalize="off" required />
+                Pin:
+                <input id="login_user" name="login_user" type="password" pattern="\d*" ng-model="pin" autocorrect="off" autocapitalize="off" maxlength="4" required />
             </div>
-            <div id="login-pass">
-                Password: <input type="password" id="login_pass" name="login_pass" ng-model="user.password" required />
-            </div>
-            <div id="login-btn" ng-click="login(user)">Login</div>
+            <div id="save-btn" ng-click="save(pin)" ng-show="newPin">Save</div>
+            <div id="login-btn" ng-click="login(pin)" ng-hide="newPin">Login</div>
         </form>
     </div>
 </div>
