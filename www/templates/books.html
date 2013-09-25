@@ -30,7 +30,7 @@
             <span class="icon-list-2 layout-btn" ng-click="clase = 'list'"></span>
 			<div class="clear"></div>
 		</div>
-		<div id="elements">
+		<div id="elements" ng-show="elements.length > 0">
 			<div ng-repeat="element in elements" ng-class="clase" class="documento-info">
 				<ng-switch on="element.type">
 					<div ng-switch-when="folder" ng-click="searchDocuments(element.id, element.name, element.url, data.breadcrumb.departmentUrl, 64000)">
@@ -45,7 +45,14 @@
 					</div>
 				</ng-switch>
 			</div>
-			<div id="load" />
+			<div class="bottom" ng-show="data.showScrollLoader">
+				<div id="bottom-loader">
+					<img src="img/loader.gif" alt="loader.gif"/>
+				</div>
+			</div>
+		</div>
+		<div id="empty-message" ng-hide="elements.length > 0">
+			This library is empty.
 		</div>
 	</div>
 </div>

@@ -261,9 +261,33 @@ hr.separator-2 {
 
 #loader img {
     position: relative;
-    width: 15%;
-    top: 25%;
-    left: 25%;
+    top: 50%;
+    left: 50%;
+    margin-top: -16px;
+    margin-left: -16px;
+}
+
+.bottom {
+	position: relative,
+	width: 100%;
+	text-align: center;
+    clear: both;
+}
+
+#bottom-loader {
+	position: relative;
+	display: inline-block;
+    width: 40%;
+    height: 50px;
+    margin-bottom: 1rem;
+    background: black;
+    border-radius: 10px;
+}
+
+#bottom-loader img {
+    position: relative;
+    top: 50%;
+    margin-top: -16px;
 }
 
 
@@ -601,6 +625,11 @@ ul.nav-department  ul.nav-functional-area li{
 	display: block;
 	margin-top: 0.5em;
 	margin-bottom: 0.5em;
+}
+
+#empty-message {
+	display: block;
+	margin: 0.5em;
 }
 
 .hidden {

@@ -115,6 +115,7 @@ angular.module('App.controllers', ['ngResource'])
 .controller('LibraryCtrl', ['$scope', '$resource', '$q', 'data', '$window', function ($scope, $resource, $q, data, $window) {
 	// Se guarda la variable data.
 	$scope.data = data;
+	$scope.data.showScrollLoader = false;
 	
 	// Variables
 	$scope.data.breadcrumb.departmentId = 0;
@@ -128,6 +129,7 @@ angular.module('App.controllers', ['ngResource'])
 		$scope.data.hideMenu = true;
 		$scope.data.scrollListen = false;
 		$scope.data.scrollHandler = function(data) {};
+		$scope.data.showScrollLoader = false;
 		$scope.data.breadcrumb.departmentId = departmentId;
 		$scope.data.breadcrumb.departmentName = departmentName;
 		$scope.data.breadcrumb.departmentUrl = departmentUrl;
@@ -176,54 +178,65 @@ angular.module('App.controllers', ['ngResource'])
 		$scope.data.breadcrumb.folderUrl = documentFolderUrl;
 		$scope.data.currentDepartmentUrl = departmentUrl;
 		
-		if (lastId >= 64000) {
-			$scope.elements = [];
-			$window.scrollTo(0, 0);
-		}
+		if (!$scope.data.showLoader && !$scope.data.showScrollLoader) {
+			if (lastId >= 64000) {
+				$scope.elements = [];
+				$window.scrollTo(0, 0);
+				$scope.data.showLoader = true;
+			} else {
+				$scope.data.showScrollLoader = true;
+			}
 		
-		$scope.data.showLoader = true;
-		var deferred = $q.defer();
-		var LibraryService = $resource(
-			"http://sap.mexusbio.org/DigitalLibraryServices/SharePointDataAccess.svc/Documents?w=:w&l=:l&b=:b&i=:i",
-			{}
-		).get(
-			{
-				w : documentFolderUrl,
-				l : documentFolderId,
-				b : 24,
-				i : lastId
-			},
-			function (event) {
-				deferred.resolve(event);
-			},
-			function (response) {
-				deferred.reject(response);
-			}
-		);
-		var LibraryService = deferred.promise;
-		LibraryService.then(
-			function(event) {
-				if (event.GetDocumentsResult.items.length > 0) {
-					$scope.elements = $scope.elements.concat(event.GetDocumentsResult.items);
-					$scope.data.breadcrumb.totalElements = event.GetDocumentsResult.totalItems;
-					$scope.data.scrollLastId = event.GetDocumentsResult.lastID;
-					$scope.data.showLoader = false;
-				
-					$scope.data.scrollListen = true;
-					$scope.data.scrollHandler = function(data) {
-						$scope.searchDocuments(data.breadcrumb.folderId, data.breadcrumb.folderName, data.breadcrumb.folderUrl, data.currentDepartmentUrl, data.scrollLastId);
-					};
-				} else {
-					$scope.data.showLoader = false;
-					
-					$scope.data.scrollListen = false;
-					$scope.data.scrollHandler = function(data) {};
+			var deferred = $q.defer();
+			var LibraryService = $resource(
+				"http://sap.mexusbio.org/DigitalLibraryServices/SharePointDataAccess.svc/Documents?w=:w&l=:l&b=:b&i=:i",
+				{}
+			).get(
+				{
+					w : documentFolderUrl,
+					l : documentFolderId,
+					b : 24,
+					i : lastId
+				},
+				function (event) {
+					deferred.resolve(event);
+				},
+				function (response) {
+					deferred.reject(response);
 				}
-			},
-			function(response) {
-				alert('Error: Library couldn\'t be retrieved');
-			}
-		);
+			);
+			var LibraryService = deferred.promise;
+			LibraryService.then(
+				function(event) {
+					if (event.GetDocumentsResult.items.length > 0) {
+						$scope.elements = $scope.elements.concat(event.GetDocumentsResult.items);
+						$scope.data.breadcrumb.totalElements = event.GetDocumentsResult.totalItems;
+						$scope.data.scrollLastId = event.GetDocumentsResult.lastID;
+						$scope.data.showLoader = false;
+						$scope.data.showScrollLoader = false;
+				
+						$scope.data.scrollListen = true;
+						$scope.data.scrollHandler = function(data) {
+							$scope.searchDocuments(data.breadcrumb.folderId, data.breadcrumb.folderName, data.breadcrumb.folderUrl, data.currentDepartmentUrl, data.scrollLastId);
+						};
+					} else {
+						if ($scope.elements.length == 0) {
+							$scope.data.breadcrumb.totalElements = 0;
+						}
+						$scope.data.showLoader = false;
+						$scope.data.showScrollLoader = false;
+					
+						$scope.data.scrollListen = false;
+						$scope.data.scrollHandler = function(data) {};
+					}
+				},
+				function(response) {
+					$scope.data.showLoader = false;
+					$scope.data.showScrollLoader = false;
+					alert('Error: Library couldn\'t be retrieved');
+				}
+			);
+		}
 	}
 	
 	$scope.downloadDocument = function(document) {
