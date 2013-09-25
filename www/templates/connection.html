@@ -1,0 +1,17 @@
+<div id="login" ng-controller="LoginCtrl">
+	<header>
+        <div id="header-wrapper">
+            <h1>
+                Digital <span class="text-bold">Library</span>
+            </h1>
+        </div>
+    </header>
+    <div id="login-container">
+    	<form id="login-form" name="form" class="css-form" novalidate>
+        	<div class="message">
+        		Digital Library can't connect to the server. Check your connection and try again.
+        	</div>
+        	<div id="reconnect-btn" ng-click="reconnect()">Reconnect</div>
+        </form>
+    </div>
+</div>

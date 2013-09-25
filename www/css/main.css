@@ -9,6 +9,19 @@
 	font-style: normal;
 }
 
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Light'), local('OpenSans-Light'), url('../fonts/DXI1ORHCpsQm3Vp6mXoaTaRDOzjiPcYnFooOUGCOsRk.woff') format('woff');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url('../fonts/cJZKeOuBrn4kERxqtaUH3bO3LdcAZYWl9Si6vvxL-qU.woff') format('woff');
+}
+
 /* Use the following CSS code if you want to use data attributes for inserting your icons */
 [data-icon]:before {
 	font-family: 'icomoon';
@@ -275,14 +288,14 @@ hr.separator-2 {
     border-radius: 8px;
 }
 
-#login-form {
+#login-form, #connection-form {
     width: 90%;
     margin: 0 auto;
     padding-top: 1rem;
     padding-bottom: 1rem;
 }
 
-#save-btn, #login-btn {
+#save-btn, #login-btn, #reconnect-btn {
     background: #4A4A4A;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -291,6 +304,9 @@ hr.separator-2 {
     width: 4rem;
     text-align: center;
     padding-top: 0.2rem;
+}
+#reconnect-btn {
+	width: 6rem;
 }
 
 .css-form input.ng-invalid.ng-dirty {
@@ -579,4 +595,14 @@ ul.nav-department  ul.nav-functional-area div{
 
 ul.nav-department  ul.nav-functional-area li{
 	margin: 0.2rem 0.2rem 0.3rem;
+}
+
+.message {
+	display: block;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.hidden {
+	display: none !important;
 }

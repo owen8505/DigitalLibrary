@@ -47,3 +47,9 @@ var app = {
         console.log('Received Event: ' + id);
     }
 };
+
+document.addEventListener("offline", withoutConnection, false);
+
+function withoutConnection() {
+	window.location = '#/connection';
+}

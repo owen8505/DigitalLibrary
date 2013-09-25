@@ -2,7 +2,7 @@
 	<hr class="separator-1"/>
 
     <div id="library-tools">
-    	<div id="search-folders">
+    	<div id="search-folders" class="hidden">
     		<input type="search" placeholder="Search documents" ng-model="data.filter" />
     	</div>
     </div>
@@ -14,7 +14,7 @@
             <div class="breadcrumb-department" ng-click="searchDocumentFolder(data.breadcrumb.departmentId, data.breadcrumb.departmentName, data.breadcrumb.departmentUrl)">
                 {{data.breadcrumb.departmentName}} <span ng-hide="data.breadcrumb.folderId != 0">({{data.breadcrumb.totalElements}})</span>
             </div>
-            <div class="breadcrumb-folder" ng-hide="data.breadcrumb.folderId == 0" ng-click="searchDocuments(data.breadcrumb.folderId, data.breadcrumb.folderName)">
+            <div class="breadcrumb-folder" ng-hide="data.breadcrumb.folderId == 0">
                 <div class="folder-image"></div>
                 {{data.breadcrumb.folderName}} ({{data.breadcrumb.totalElements}})
             </div>
@@ -22,18 +22,18 @@
 		<hr class="separator-10">
 		<div id="tools" class="columns-12">
 			<div id="search-filter">
-				<form id="search-filter-form">
+				<form id="search-filter-form" class="hidden">
 					<input type="search" placeholder="Filter by keywords" ng-model="data.resultFilter">
 				</form>
 			</div>
             <span class="icon-icons layout-btn" ng-click="clase = 'icons'"></span>&nbsp;
-            <span class="icon-list-2 layout-btn" ng-click="clase = 'list'"></span>                     
+            <span class="icon-list-2 layout-btn" ng-click="clase = 'list'"></span>
 			<div class="clear"></div>
 		</div>
 		<div id="elements">
 			<div ng-repeat="element in elements" ng-class="clase" class="documento-info">
 				<ng-switch on="element.type">
-					<div ng-switch-when="folder" ng-click="searchDocuments(element.id, element.name)">
+					<div ng-switch-when="folder" ng-click="searchDocuments(element.id, element.name, element.url, data.breadcrumb.departmentUrl, 64000)">
 						<div class="folder-image"></div>
 						<div class="folder-title">{{element.name}}</div>
 					</div>
@@ -45,6 +45,7 @@
 					</div>
 				</ng-switch>
 			</div>
+			<div id="load" />
 		</div>
 	</div>
 </div>

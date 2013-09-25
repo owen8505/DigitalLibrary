@@ -5,6 +5,8 @@ angular.module('App.controllers', ['ngResource'])
     data.showLoader = false;
 	data.filter = "";
 	data.resultFilter = "";
+	
+	// Breadcrumbs
 	data.breadcrumb = {
 		departmentId : 0,
 		departmentName : "",
@@ -12,6 +14,20 @@ angular.module('App.controllers', ['ngResource'])
 		folderName : "",
 		totalElements : 0
 	}
+	data.currentDepartmentUrl = '';
+	
+	// Scroll functions
+	data.scrollListen = false;
+	data.scrollHandler = function(data) {
+	}
+	data.scrollLastId = 64000;
+	window.onscroll = function() {
+    	if (data.scrollListen && ((window.pageYOffset + window.innerHeight) >= document.body.offsetHeight)) {
+			data.scrollHandler(data);
+    	}
+	}
+	
+	// Cache functions
 	data.setCache = function (key, value) {
 		window.localStorage.setItem(key, JSON.stringify(value));
 	}
@@ -27,6 +43,8 @@ angular.module('App.controllers', ['ngResource'])
 	if (!data.isCache('last_viewed')) {
 		data.setCache('last_viewed', []);
 	}
+	
+	// Return data
 	return data;
 }])
 .controller('LoginCtrl', ['$scope', '$location', 'data', function ($scope, $location, data) {
@@ -56,25 +74,17 @@ angular.module('App.controllers', ['ngResource'])
 		}
 	};
 }])
-.controller('MenuCtrl', ['$scope', '$resource', '$q','data', function ($scope, $resource, $q, data) {
+.controller('ConnectionCtrl', ['$scope', '$location', 'data', function ($scope, $location, data) {
+	// Funciones
+	$scope.data = data;
+	$scope.reconnect = function() {
+		$location.path('/');
+	}
+}])
+.controller('MenuCtrl', ['$scope', '$location', '$resource', '$q','data', function ($scope, $location, $resource, $q, data) {
 	// Se guarda la variable data.
 	$scope.data = data;
     $scope.data.showLoader = true;
-                         
-    //var loaderTimeout = $timeout(function() { alert('Error de conexión'); }, 10000);
-                         
-	// Servicio que traería todo el menú
-	/*$scope.menu = [
-		{id:"1", name: "Front Office", functionalArea: [
-			{id:"1", name: "Executive Management"}
-		]},
-		{id:"2", name: "Policy Group", functionalArea: [
-			{id:"2", name: "Policy"}
-		]},
-		{id:"3", name: "Program Office", functionalArea: [
-			{id:"3", name: "Project Management"}
-		]}
-	];*/
 	
 	//$http.defaults.headers.common.Authorization = 'Basic ' + btoa('supportserver\lopeze' + ':' + '@P4ssw0rd!');
 	var deferred = $q.defer();
@@ -93,16 +103,16 @@ angular.module('App.controllers', ['ngResource'])
 	var MenuServicePromise = deferred.promise;
 	MenuServicePromise.then(
 		function(event) {
-                            //$timeout.cancel(loaderTimeout);
-                            $scope.data.showLoader = false;
-                            $scope.menu = event.GetMenuResult;
-                        },
+			//$timeout.cancel(loaderTimeout);
+			$scope.data.showLoader = false;
+			$scope.menu = event.GetMenuResult;
+        },
 		function(response) {
-                            alert('Error: Menu couldn\'t be retrieved');
-                            }
+            $location.path('/connection');
+        }
 	);
 }])
-.controller('LibraryCtrl', ['$scope', '$resource', '$q', 'data', function ($scope, $resource, $q, data) {
+.controller('LibraryCtrl', ['$scope', '$resource', '$q', 'data', '$window', function ($scope, $resource, $q, data, $window) {
 	// Se guarda la variable data.
 	$scope.data = data;
 	
@@ -116,30 +126,13 @@ angular.module('App.controllers', ['ngResource'])
 	// Funciones
 	$scope.searchDocumentFolder = function(departmentId, departmentName, departmentUrl) {
 		$scope.data.hideMenu = true;
+		$scope.data.scrollListen = false;
+		$scope.data.scrollHandler = function(data) {};
 		$scope.data.breadcrumb.departmentId = departmentId;
 		$scope.data.breadcrumb.departmentName = departmentName;
 		$scope.data.breadcrumb.departmentUrl = departmentUrl;
 		$scope.data.breadcrumb.folderId = 0;
 		$scope.data.breadcrumb.folderName = "";
-		
-		/**
-		
-		$scope.elements = [];
-		var pos = 0;
-		for (var i = 0; i < 5; i++) {
-			var random = Math.random() * 100;
-			if (random >= 50) {
-				$scope.elements[pos++] = {id:"" + random, name: "" + departmentName + random, type:"folder"};
-			}
-		}
-		$scope.data.breadcrumb.totalElements = $scope.elements.length;
-		
-		if (departmentId == 0) {
-			$scope.elements = $scope.data.getCache('last_viewed');
-			$scope.data.breadcrumb.totalElements = $scope.elements.length;
-		}
-		
-		**/
 		
 		if (departmentId == 0) {
 			$scope.elements = $scope.data.getCache('last_viewed');
@@ -164,6 +157,7 @@ angular.module('App.controllers', ['ngResource'])
 			var LibraryService = deferred.promise;
 			LibraryService.then(
 				function(event) {
+					$window.scrollTo(0, 0);
 					$scope.elements = event.GetListsResult;
 					$scope.data.breadcrumb.totalElements = $scope.elements.length;
 					$scope.data.showLoader = false;
@@ -175,20 +169,61 @@ angular.module('App.controllers', ['ngResource'])
 		}
 	}
 	
-	$scope.searchDocuments = function(documentFolderId, documentFolderName) {
+	$scope.searchDocuments = function(documentFolderId, documentFolderName, documentFolderUrl, departmentUrl, lastId) {
 		$scope.data.hideMenu = true;
 		$scope.data.breadcrumb.folderId = documentFolderId;
 		$scope.data.breadcrumb.folderName = documentFolderName;
+		$scope.data.breadcrumb.folderUrl = documentFolderUrl;
+		$scope.data.currentDepartmentUrl = departmentUrl;
 		
-		$scope.elements = [];
-		var pos = 0;
-		for (var i = 0; i < 10; i++) {
-			var random = Math.random() * 100;
-			if (random >= 50) {
-				$scope.elements[pos++] = {id:"" + random, name: "" + documentFolderName + random, type:"document-1"};
-			}
+		if (lastId >= 64000) {
+			$scope.elements = [];
+			$window.scrollTo(0, 0);
 		}
-		$scope.data.breadcrumb.totalElements = $scope.elements.length;
+		
+		$scope.data.showLoader = true;
+		var deferred = $q.defer();
+		var LibraryService = $resource(
+			"http://sap.mexusbio.org/DigitalLibraryServices/SharePointDataAccess.svc/Documents?w=:w&l=:l&b=:b&i=:i",
+			{}
+		).get(
+			{
+				w : documentFolderUrl,
+				l : documentFolderId,
+				b : 24,
+				i : lastId
+			},
+			function (event) {
+				deferred.resolve(event);
+			},
+			function (response) {
+				deferred.reject(response);
+			}
+		);
+		var LibraryService = deferred.promise;
+		LibraryService.then(
+			function(event) {
+				if (event.GetDocumentsResult.items.length > 0) {
+					$scope.elements = $scope.elements.concat(event.GetDocumentsResult.items);
+					$scope.data.breadcrumb.totalElements = event.GetDocumentsResult.totalItems;
+					$scope.data.scrollLastId = event.GetDocumentsResult.lastID;
+					$scope.data.showLoader = false;
+				
+					$scope.data.scrollListen = true;
+					$scope.data.scrollHandler = function(data) {
+						$scope.searchDocuments(data.breadcrumb.folderId, data.breadcrumb.folderName, data.breadcrumb.folderUrl, data.currentDepartmentUrl, data.scrollLastId);
+					};
+				} else {
+					$scope.data.showLoader = false;
+					
+					$scope.data.scrollListen = false;
+					$scope.data.scrollHandler = function(data) {};
+				}
+			},
+			function(response) {
+				alert('Error: Library couldn\'t be retrieved');
+			}
+		);
 	}
 	
 	$scope.downloadDocument = function(document) {
