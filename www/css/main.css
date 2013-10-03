@@ -462,6 +462,10 @@ hr.separator-2 {
     font-size: 0.9rem;
 }
 
+.local .icon-download-document {
+	display: none;
+}
+
 .icons .document-title, .icons .folder-title {
     text-overflow: ellipsis;
     overflow: hidden;
@@ -499,6 +503,11 @@ hr.separator-2 {
     vertical-align: top;
 }
 
+.list .downloading .document-image {
+	background: transparent url('../img/documento_downloading.png') no-repeat !important;
+	background-size: 20px 24px !important;
+}
+
 .list .document-image .icon-download-document{
     display: none;
 }
@@ -528,7 +537,6 @@ hr.separator-2 {
 	width: 100px;
     border-width: 0px;
 }
-
 .document-image{
     position: relative;
 	background: transparent url('../img/documento.png') no-repeat;
@@ -537,6 +545,11 @@ hr.separator-2 {
 	height: 120px;
 	width: 100px;
     border-width: 0px;
+}
+
+.downloading .document-image{
+	background: transparent url('../img/documento_downloading.png') no-repeat !important;
+	background-size: 100px 120px !important;
 }
 
 .documento-info .document-title, .documento-info .folder-title{

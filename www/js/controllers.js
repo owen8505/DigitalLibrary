@@ -127,6 +127,26 @@ angular.module('App.controllers', ['ngResource'])
 	$scope.selectedLayoutList = '';
                             
 	// Funciones
+	$scope.verifyDocuments = function (documentsToVerify) {
+		for (var i = 0; i < documentsToVerify.length; i++) {
+			var tempId = 'document_' + documentsToVerify[i].id;
+			if ($scope.data.isCache(tempId)) {
+				var ruta = $scope.data.getCache(tempId);
+				$scope.data.setCache('' + ruta.replace(/^.*[\\\/]/, ''), tempId);
+				$window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
+					$window.resolveLocalFileSystemURI(
+						$scope.data.getCache(tempId),
+						function(fileEntry) {
+							var elementHTTP = angular.element($window.document.getElementById($scope.data.getCache(fileEntry.name)));
+							elementHTTP.addClass('local');
+						},
+						function(error) {});
+				}, function() {});
+			}
+		}
+	}
+	$scope.verifyDocuments($scope.elements);
+	
 	$scope.searchDocumentFolder = function(departmentId, departmentName, departmentUrl) {
 		$scope.data.hideMenu = true;
 		$scope.data.scrollListen = false;
@@ -141,6 +161,8 @@ angular.module('App.controllers', ['ngResource'])
 		if (departmentId == 0) {
 			$scope.elements = $scope.data.getCache('last_viewed');
 			$scope.data.breadcrumb.totalElements = $scope.elements.length;
+			
+			$scope.verifyDocuments($scope.elements);
 		} else {
 			$scope.data.showLoader = true;
 			var deferred = $q.defer();
@@ -221,6 +243,8 @@ angular.module('App.controllers', ['ngResource'])
 						$scope.data.scrollHandler = function(data) {
 							$scope.searchDocuments(data.breadcrumb.folderId, data.breadcrumb.folderName, data.breadcrumb.folderUrl, data.currentDepartmentUrl, data.scrollLastId);
 						};
+						
+						$scope.verifyDocuments(event.GetDocumentsResult.items);
 					} else {
 						if ($scope.elements.length == 0) {
 							$scope.data.breadcrumb.totalElements = 0;
@@ -242,20 +266,56 @@ angular.module('App.controllers', ['ngResource'])
 	}
 	
 	$scope.downloadDocument = function(document) {
-		var last_viewed = $scope.data.getCache('last_viewed');
-		var arreglo = [];
-		var i = 0;
-		arreglo[i++] = document;
-		for (j = 0; j < last_viewed.length; j++) {
-			if (i < 10) {
-				if (last_viewed[j].id != document.id) {
-					arreglo[i++] = last_viewed[j];
+		documentHTML = angular.element($window.document.getElementById('document_' + document.id));
+		if (documentHTML.hasClass('downloading')) {
+
+		} else if (documentHTML.hasClass('local')) {
+			var last_viewed = $scope.data.getCache('last_viewed');
+			var arreglo = [];
+			var i = 0;
+			arreglo[i++] = document;
+			for (j = 0; j < last_viewed.length; j++) {
+				if (i < 10) {
+					if (last_viewed[j].id != document.id) {
+						arreglo[i++] = last_viewed[j];
+					}
+				} else {
+					break;
 				}
-			} else {
-				break;
 			}
+			$scope.data.setCache('last_viewed', arreglo);
+			alert('Opening... ' + $scope.data.getCache('document_' + document.id));
+			$window.open($scope.data.getCache('document_' + document.id));
+		} else {
+			documentHTML.addClass('downloading');
+			$window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, 
+				function onFileSystemSuccess(fileSystem) {
+					fileSystem.root.getFile(
+					"index.html", {create: true, exclusive: false}, 
+					function gotFileEntry(fileEntry) {
+						var sPath = fileEntry.fullPath.replace("index.html","");
+						var fileTransfer = new FileTransfer();
+						fileEntry.remove();
+
+						fileTransfer.download(
+							"http://sap.mexusbio.org/DigitalLibraryServices/SharePointDataAccess.svc/Document?d=" + document.serverRelativeUrl,
+							sPath + document.serverRelativeUrl,
+							function(theFile) {
+								alert("download success " + theFile.toURI());
+								$scope.data.setCache('document_' + document.id, theFile.toURI());
+								documentHTML.removeClass('downloading');
+								documentHTML.addClass('local');
+							},
+							function(error) {
+								console.log("download error source " + error.source);
+								console.log("download error target " + error.target);
+								console.log("upload error code: " + error.code);
+								alert("download error " + JSON.stringify(error));
+							}
+						);
+					}, function() {});
+				}, function() {});
 		}
-		$scope.data.setCache('last_viewed', arreglo);
 	}
 	
 	$scope.filterFolders = function () {
