@@ -123,7 +123,9 @@ angular.module('App.controllers', ['ngResource'])
 	$scope.elements = $scope.data.getCache('last_viewed');
 	$scope.data.breadcrumb.totalElements = $scope.elements.length;
 	$scope.clase = 'icons';
-	
+    $scope.selectedLayoutIcons = 'selected';
+	$scope.selectedLayoutList = '';
+                            
 	// Funciones
 	$scope.searchDocumentFolder = function(departmentId, departmentName, departmentUrl) {
 		$scope.data.hideMenu = true;
@@ -262,4 +264,16 @@ angular.module('App.controllers', ['ngResource'])
 	$scope.filterDocuments = function () {
 		alert('Filtrando documentos por ' + $scope.data.documentFilter.type + ', ' + $scope.data.documentFilter.text);
 	}
+                            
+    $scope.changeLayout = function (pressedButton) {
+        if(pressedButton == 'icons'){
+            $scope.clase = 'icons';
+            $scope.selectedLayoutIcons = 'selected';
+            $scope.selectedLayoutList = '';
+        } else {
+            $scope.clase = 'list';
+            $scope.selectedLayoutIcons = '';
+            $scope.selectedLayoutList = 'selected';
+        }
+    }
 }]);

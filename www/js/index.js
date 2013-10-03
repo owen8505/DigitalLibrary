@@ -53,3 +53,9 @@ document.addEventListener("offline", withoutConnection, false);
 function withoutConnection() {
 	window.location = '#/connection';
 }
+
+document.addEventListener('deviceready', function(){
+                          if (parseFloat(window.device.version) === 7.0) {
+                            //document.body.style.marginTop = "20px";
+                          }
+                        }, false);

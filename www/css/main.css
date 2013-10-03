@@ -438,7 +438,14 @@ hr.separator-2 {
 }
 
 .layout-btn {
-    font-size: 0.8rem;
+    font-size: 1.2rem;
+    margin-left: 0.3rem;
+    margin-right: 0.3rem;
+    color: #999;
+}
+
+.layout-btn.selected {
+    color: #000;
 }
 
 .icons {
@@ -463,12 +470,14 @@ hr.separator-2 {
 .list {
     text-align: left;
     height: 2rem;
+    margin-bottom: 0.6rem;
 }
 
 .list div {
     display: inline-block !important;
     vertical-align: top;
 }
+
 
 .list .folder-image {
 	background: transparent url('../img/folder.png') no-repeat;	
@@ -498,6 +507,7 @@ hr.separator-2 {
     max-width: 240px;
     text-overflow: ellipsis;
     overflow: hidden;
+  height: 2.0rem;
 }
 
 .documento-info {

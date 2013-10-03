@@ -26,8 +26,8 @@
 					<input type="search" placeholder="Filter by keywords" ng-model="data.resultFilter">
 				</form>
 			</div>
-            <span class="icon-icons layout-btn" ng-click="clase = 'icons'"></span>&nbsp;
-            <span class="icon-list-2 layout-btn" ng-click="clase = 'list'"></span>
+            <span class="icon-icons layout-btn" ng-class="selectedLayoutIcons" ng-click="changeLayout('icons')"></span>&nbsp;
+            <span class="icon-list-2 layout-btn" ng-class="selectedLayoutList" ng-click="changeLayout('list')"></span>
 			<div class="clear"></div>
 		</div>
 		<div id="elements" ng-show="elements.length > 0">
@@ -37,7 +37,8 @@
 						<div class="folder-image"></div>
 						<div class="folder-title">{{element.name}}</div>
 					</div>
-					<div ng-switch-default ng-click="downloadDocument(element)">
+					<!--div ng-switch-default ng-click="downloadDocument(element)" hm-tap="{expression}"-->
+                        <div ng-switch-default hm-tap="clase='list'">
 						<div class="document-image">
                             <span class="icon-cloud-dl icon-download-document"></span>
                         </div>
