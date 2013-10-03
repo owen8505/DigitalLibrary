@@ -127,26 +127,70 @@ angular.module('App.controllers', ['ngResource'])
 	$scope.selectedLayoutList = '';
                             
 	// Funciones
-	$scope.verifyDocuments = function (documentsToVerify) {
+	/** Actualiza el path y ejecuta una función después de actualizarlo **/
+	$scope.updatePath = function (windowRef, funcionRef) {
+		alert('RF1');
+		windowRef.requestFileSystem(LocalFileSystem.PERSISTENT, 0, 
+			function onFileSystemSuccess(fileSystem) {
+				alert('RF2');
+				fileSystem.root.getFile(
+				"index.html", {create: true, exclusive: false}, 
+				function gotFileEntry(fileEntry) {
+					alert('RF3');
+					var sPath = fileEntry.fullPath.replace("/index.html","");
+					$scope.data.setCache('file_path', sPath);
+					fileEntry.remove();
+					alert('RF4');
+				
+					funcionRef();
+					alert('RF5');
+				},
+				function(e) {
+					alert('DOWN1 error ' + e);
+				});
+			},
+			function(e) {
+				alert('DOWN0 error ' + e);
+			});
+		alert('RF10');
+	}
+	/** Verifica ¿Qué documentos sí están locales? **/
+	$scope.verifyLocalDocuments = function (windowRef, documentsToVerify) {
+		var pathTemp = $scope.data.getCache('file_path');
+		var documentsTemp = {};
 		for (var i = 0; i < documentsToVerify.length; i++) {
 			var tempId = 'document_' + documentsToVerify[i].id;
-			if ($scope.data.isCache(tempId)) {
-				var ruta = $scope.data.getCache(tempId);
-				$scope.data.setCache('' + ruta.replace(/^.*[\\\/]/, ''), tempId);
-				$window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-					$window.resolveLocalFileSystemURI(
-						$scope.data.getCache(tempId),
-						function(fileEntry) {
-							var elementHTTP = angular.element($window.document.getElementById($scope.data.getCache(fileEntry.name)));
-							elementHTTP.addClass('local');
-						},
-						function(error) {});
-				}, function() {});
-			}
+			var url = 'file://' + pathTemp + documentsToVerify[i].serverRelativeUrl;
+			var name = url.replace(/^.*[\\\/]/, '');
+			documentsTemp[name] = documentsToVerify[i].id;
+			windowRef.resolveLocalFileSystemURI(
+				url,
+				function(fileEntry) {
+					//alert('Encontrado local: ' +  documentsTemp[fileEntry.name] + ', fileEntry: ' + JSON.stringify(fileEntry));
+					var documentId = documentsTemp[fileEntry.name];
+					for (var j = 0; j < documentsToVerify.length; j++) {
+						if (documentsToVerify[j].id == documentId) {
+							documentsToVerify[j].cssClass = 'local';
+							break;
+						}
+					}
+				},
+				function(error) {});
 		}
 	}
-	$scope.verifyDocuments($scope.elements);
+	/** Verifica documentos locales **/
+	$scope.verifyDocuments = function (windowRef, documentsToVerify) {
+		if ($scope.data.isCache('file_path')) {
+			$scope.verifyLocalDocuments(windowRef, documentsToVerify);
+		} else {
+			$scope.updatePath(windowRef, function () {
+				$scope.verifyLocalDocuments(windowRef, documentsToVerify);
+			});
+		}
+	}
+	$scope.verifyDocuments($window, $scope.elements);
 	
+	/** Busca folders **/
 	$scope.searchDocumentFolder = function(departmentId, departmentName, departmentUrl) {
 		$scope.data.hideMenu = true;
 		$scope.data.scrollListen = false;
@@ -162,7 +206,7 @@ angular.module('App.controllers', ['ngResource'])
 			$scope.elements = $scope.data.getCache('last_viewed');
 			$scope.data.breadcrumb.totalElements = $scope.elements.length;
 			
-			$scope.verifyDocuments($scope.elements);
+			$scope.verifyDocuments($window, $scope.elements);
 		} else {
 			$scope.data.showLoader = true;
 			var deferred = $q.defer();
@@ -195,6 +239,7 @@ angular.module('App.controllers', ['ngResource'])
 		}
 	}
 	
+	/** Busca documentos **/
 	$scope.searchDocuments = function(documentFolderId, documentFolderName, documentFolderUrl, departmentUrl, lastId) {
 		$scope.data.hideMenu = true;
 		$scope.data.breadcrumb.folderId = documentFolderId;
@@ -244,7 +289,7 @@ angular.module('App.controllers', ['ngResource'])
 							$scope.searchDocuments(data.breadcrumb.folderId, data.breadcrumb.folderName, data.breadcrumb.folderUrl, data.currentDepartmentUrl, data.scrollLastId);
 						};
 						
-						$scope.verifyDocuments(event.GetDocumentsResult.items);
+						$scope.verifyDocuments($window, event.GetDocumentsResult.items);
 					} else {
 						if ($scope.elements.length == 0) {
 							$scope.data.breadcrumb.totalElements = 0;
@@ -265,11 +310,46 @@ angular.module('App.controllers', ['ngResource'])
 		}
 	}
 	
+	/** Descarga archivo **/
+	$scope.downloadFile = function (path, serverUrl, documentHTML) {
+		alert('Begins download: ' + "http://sap.mexusbio.org/DigitalLibraryServices/SharePointDataAccess.svc/Document?d=" + serverUrl);
+		var fileTransfer = new FileTransfer();
+		fileTransfer.download(
+			"http://sap.mexusbio.org/DigitalLibraryServices/SharePointDataAccess.svc/Document?d=" + serverUrl,
+			path + serverUrl,
+			function(theFile) {
+				alert("Download success: " + theFile.toURI());
+				documentHTML.removeClass('downloading');
+				documentHTML.addClass('local');
+			},
+			function(error) {
+				alert("Download error: " + JSON.stringify(error));
+				documentHTML.removeClass('downloading');
+				console.log("download error source " + error.source);
+				console.log("download error target " + error.target);
+				console.log("upload error code: " + error.code);
+			}
+		);
+	}
+	
+	/** Acción que se ejecuta para descargar un documento **/
 	$scope.downloadDocument = function(document) {
 		documentHTML = angular.element($window.document.getElementById('document_' + document.id));
 		if (documentHTML.hasClass('downloading')) {
-
+			// Ignores click
 		} else if (documentHTML.hasClass('local')) {
+			if ($scope.data.isCache('file_path')) {
+				//alert('Opening file: ' + $scope.data.getCache('file_path') + document.serverRelativeUrl);
+				$window.open($scope.data.getCache('file_path') + document.serverRelativeUrl, '_blank');
+				//$window.location.href = $scope.data.getCache('file_path') + document.serverRelativeUrl;
+			} else {
+				$scope.updatePath($window, function () {
+					//alert('Opening file: ' + $scope.data.getCache('file_path') + document.serverRelativeUrl);
+					$window.open($scope.data.getCache('file_path') + document.serverRelativeUrl, '_blank');
+					//$window.location.href = $scope.data.getCache('file_path') + document.serverRelativeUrl;
+				});
+			}
+			
 			var last_viewed = $scope.data.getCache('last_viewed');
 			var arreglo = [];
 			var i = 0;
@@ -284,37 +364,15 @@ angular.module('App.controllers', ['ngResource'])
 				}
 			}
 			$scope.data.setCache('last_viewed', arreglo);
-			alert('Opening... ' + $scope.data.getCache('document_' + document.id));
-			$window.open($scope.data.getCache('document_' + document.id));
 		} else {
 			documentHTML.addClass('downloading');
-			$window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, 
-				function onFileSystemSuccess(fileSystem) {
-					fileSystem.root.getFile(
-					"index.html", {create: true, exclusive: false}, 
-					function gotFileEntry(fileEntry) {
-						var sPath = fileEntry.fullPath.replace("index.html","");
-						var fileTransfer = new FileTransfer();
-						fileEntry.remove();
-
-						fileTransfer.download(
-							"http://sap.mexusbio.org/DigitalLibraryServices/SharePointDataAccess.svc/Document?d=" + document.serverRelativeUrl,
-							sPath + document.serverRelativeUrl,
-							function(theFile) {
-								alert("download success " + theFile.toURI());
-								$scope.data.setCache('document_' + document.id, theFile.toURI());
-								documentHTML.removeClass('downloading');
-								documentHTML.addClass('local');
-							},
-							function(error) {
-								console.log("download error source " + error.source);
-								console.log("download error target " + error.target);
-								console.log("upload error code: " + error.code);
-								alert("download error " + JSON.stringify(error));
-							}
-						);
-					}, function() {});
-				}, function() {});
+			if ($scope.data.isCache('file_path')) {
+				$scope.downloadFile($scope.data.getCache('file_path'), document.serverRelativeUrl, documentHTML);
+			} else {
+				$scope.updatePath($window, function () {
+					$scope.downloadFile($scope.data.getCache('file_path'), document.serverRelativeUrl, documentHTML);
+				});
+			}
 		}
 	}
 	
