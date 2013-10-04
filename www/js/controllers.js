@@ -53,9 +53,9 @@ angular.module('App.controllers', ['ngResource'])
 	$scope.data = data;
 	$scope.newPin = false;
 	if ($scope.data.isCache('pin')) {
-		$scope.message = "Input the pin for the app.";
+		$scope.message = "Enter your passcode:";
 	} else {
-		$scope.message = "It's the first time you use the app. Input the pin for the app.";
+		$scope.message = "Please, set a secure passcode:";
 		$scope.newPin = true;
 	}
 	$scope.save = function(pin) {

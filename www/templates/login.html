@@ -12,8 +12,7 @@
         		{{message}}
         	</div>
             <div id="login-user">
-                Pin:
-                <input id="login_user" name="login_user" type="password" pattern="\d*" ng-model="pin" autocorrect="off" autocapitalize="off" maxlength="4" required />
+                <input id="login_user" name="login_user" type="password" placeholder="Pin" pattern="\d*" ng-model="pin" autocorrect="off" autocapitalize="off" maxlength="4" required />
             </div>
             <div id="save-btn" ng-click="save(pin)" ng-show="newPin">Save</div>
             <div id="login-btn" ng-click="login(pin)" ng-hide="newPin">Login</div>
