@@ -86,6 +86,9 @@ angular.module('App.controllers', ['ngResource'])
     // Funciones
     $scope.data = data;
     // console.log(JSON.stringify(data.documentInfo));
+    $scope.back = function () {
+        history.back();
+    }
     
 }])
 .controller('MenuCtrl', ['$scope', '$location', '$resource', '$q','data', function ($scope, $location, $resource, $q, data) {
@@ -347,13 +350,15 @@ angular.module('App.controllers', ['ngResource'])
 		} else if (documentHTML.hasClass('local')) {
 			if ($scope.data.isCache('file_path')) {
 				//alert('Opening file: ' + $scope.data.getCache('file_path') + document.serverRelativeUrl);
-				$window.open($scope.data.getCache('file_path') + document.serverRelativeUrl, '_blank');
+				//$window.open($scope.data.getCache('file_path') + document.serverRelativeUrl, '_blank');
 				//$window.location.href = $scope.data.getCache('file_path') + document.serverRelativeUrl;
+                $window.open(document.url, '_system');
 			} else {
 				$scope.updatePath($window, function () {
 					//alert('Opening file: ' + $scope.data.getCache('file_path') + document.serverRelativeUrl);
-					$window.open($scope.data.getCache('file_path') + document.serverRelativeUrl, '_blank');
+					//$window.open($scope.data.getCache('file_path') + document.serverRelativeUrl, '_blank');
 					//$window.location.href = $scope.data.getCache('file_path') + document.serverRelativeUrl;
+                    $window.open(document.url, '_system');
 				});
 			}
 			

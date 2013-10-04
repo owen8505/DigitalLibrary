@@ -579,12 +579,11 @@ hr.separator-2 {
     color: black;
 }
 
-.info-container div{
+#info-container div{
     margin-top: 1rem;
-    padding-top: 1rem;
 }
 
-.info-container .title{
+#info-container .title{
     font-size: 2rem;
 }
 
@@ -686,7 +685,7 @@ ul.nav-department  ul.nav-functional-area li{
 	display: none !important;
 }
 
-@media only screen and (orientation:landscape) {
+@media screen and (min-device-width: 768px) {
 
     #content {
         margin-top: 0rem;
