@@ -340,6 +340,10 @@ hr.separator-2 {
 
 /*** LIBRARY ***/
 
+#content {
+    margin-top: 1.9rem;
+}
+
 #library {
     background: #000;
     width: 100%;
@@ -351,10 +355,11 @@ hr.separator-2 {
     width: 100%;
     text-align: center;
     vertical-align: middle;
+  background-color: black;
+  color: white;
 }
 
 #library-tools {
-    margin-top: 1.9rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     background: #000;
@@ -457,7 +462,7 @@ hr.separator-2 {
 
 .icons .document-image .icon-download-document{
     position: absolute;
-	top: 8%;
+  top: 8%;
     right: 20%;
     font-size: 0.9rem;
 }
@@ -469,6 +474,12 @@ hr.separator-2 {
 .icons .document-title, .icons .folder-title {
     text-overflow: ellipsis;
     overflow: hidden;
+}
+
+.icons .document-info {
+    background: black;
+    width: 50px;
+    height: 50px;
 }
 
 .list {
@@ -562,6 +573,22 @@ hr.separator-2 {
 	//background: transparent url('../img/img-sprite.png') no-repeat;
 	//background-size: 600px;
 }
+
+
+#documentInfo {
+    color: black;
+}
+
+.info-container div{
+    margin-top: 1rem;
+    padding-top: 1rem;
+}
+
+.info-container .title{
+    font-size: 2rem;
+}
+
+
 
 #topMenu-bar {
 	background: black;
@@ -657,4 +684,12 @@ ul.nav-department  ul.nav-functional-area li{
 
 .hidden {
 	display: none !important;
+}
+
+@media only screen and (orientation:landscape) {
+
+    #content {
+        margin-top: 0rem;
+    }
+
 }

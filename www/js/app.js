@@ -16,6 +16,10 @@ angular.module('App', ['App.services', 'App.controllers'])
 				controller: 'ConnectionCtrl',
 				templateUrl: 'templates/connection.html'
 			})
+            .when('/info', {
+                controller: 'InfoCtrl',
+                templateUrl: 'templates/info.html'
+            })
 			.otherwise({
 				redirectTo: '/'
 			});

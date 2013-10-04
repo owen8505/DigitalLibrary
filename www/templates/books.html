@@ -1,8 +1,6 @@
 <div id="content">
-	<hr class="separator-1"/>
-
-    <div id="library-tools">
-    	<div id="search-folders" class="hidden">
+    <div id="library-tools" class="hidden">
+    	<div id="search-folders">
     		<input type="search" placeholder="Search documents" ng-model="data.filter" />
     	</div>
     </div>
@@ -37,7 +35,8 @@
 						<div class="folder-image"></div>
 						<div class="folder-title">{{element.name}}</div>
 					</div>
-					<div id="document_{{element.id}}" ng-switch-default hm-tap="clase='list'" ng-click="downloadDocument(element)" ng-class="element.cssClass">
+					<!--div id="document_{{element.id}}" ng-switch-default ng-click="downloadDocument(element)" ng-class="element.cssClass"-->
+					<div ng-switch-default ng-click="showOptions(element)">
 						<div class="document-image">
                             <span class="icon-cloud-dl icon-download-document"></span>
                         </div>

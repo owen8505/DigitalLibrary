@@ -5,6 +5,7 @@ angular.module('App.controllers', ['ngResource'])
     data.showLoader = false;
 	data.filter = "";
 	data.resultFilter = "";
+    data.documentInfo = {};
 	
 	// Breadcrumbs
 	data.breadcrumb = {
@@ -81,6 +82,12 @@ angular.module('App.controllers', ['ngResource'])
 		$location.path('/');
 	}
 }])
+.controller('InfoCtrl', ['$scope', '$location', 'data', function ($scope, $location, data) {
+    // Funciones
+    $scope.data = data;
+    // console.log(JSON.stringify(data.documentInfo));
+    
+}])
 .controller('MenuCtrl', ['$scope', '$location', '$resource', '$q','data', function ($scope, $location, $resource, $q, data) {
 	// Se guarda la variable data.
 	$scope.data = data;
@@ -112,7 +119,7 @@ angular.module('App.controllers', ['ngResource'])
         }
 	);
 }])
-.controller('LibraryCtrl', ['$scope', '$resource', '$q', 'data', '$window', function ($scope, $resource, $q, data, $window) {
+.controller('LibraryCtrl', ['$scope', '$location', '$resource', '$q', 'data', '$window', function ($scope, $location, $resource, $q, data, $window) {
 	// Se guarda la variable data.
 	$scope.data = data;
 	$scope.data.showScrollLoader = false;
@@ -393,5 +400,10 @@ angular.module('App.controllers', ['ngResource'])
             $scope.selectedLayoutIcons = '';
             $scope.selectedLayoutList = 'selected';
         }
+    }
+                            
+    $scope.showOptions = function (documento) {
+        $scope.data.documentInfo = documento;
+        $location.path('/info');
     }
 }]);
