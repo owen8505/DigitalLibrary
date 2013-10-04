@@ -579,12 +579,11 @@ hr.separator-2 {
     color: black;
 }
 
-.info-container div{
+#info-container div{
     margin-top: 1rem;
-    padding-top: 1rem;
 }
 
-.info-container .title{
+#info-container .title{
     font-size: 2rem;
 }
 
