@@ -302,14 +302,60 @@ hr.separator-2 {
     padding-left: 5%;
     padding-right: 5%;
     margin: 0 auto;
-    background: #000;
+    text-align:center;
+    background: -moz-radial-gradient(center, ellipse cover,  #526179 2%, #2e343e 99%); /* FF3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(2%,#526179), color-stop(99%,#2e343e)); /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient(center, ellipse cover,  #526179 2%,#2e343e 99%); /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(center, ellipse cover,  #526179 2%,#2e343e 99%); /* Opera 12+ */
+    background: -ms-radial-gradient(center, ellipse cover,  #526179 2%,#2e343e 99%); /* IE10+ */
+    background: radial-gradient(ellipse at center,  #526179 2%,#2e343e 99%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#526179', endColorstr='#2e343e',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+}
+
+#login header{
+    margin-top: 3rem;
+    border-bottom: 1px solid #526179;
+}
+
+#login h1 > img{
+    display: block;
+    max-width: 100px;
+    margin: 0.5rem auto 1rem;
 }
 
 #login-container {
-    background: #2A2A2A;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    border-radius: 8px;
+    margin: 0rem auto;
+    padding: 0rem 1rem;
+    width: 100%;
+}
+
+#login-container #button-container{
+    font-size: 1rem;
+}
+
+#login-container input{
+    display: block;
+    height: 36px;
+    margin: 0rem auto;
+}
+
+#login-container input:first-child{
+    border: none;
+    border-radius: 5px 5px 0px 0px;
+    border-bottom: none;
+    box-shadow: none;
+}
+
+#login-container input:last-child{
+    border-radius: 0px 0px 5px 5px;
+}
+
+#login-container #button-container .button{
+    font-size: 1.2rem;
+    max-width: 300px;
+    margin-top: 1rem;
+    width: 100%;
 }
 
 #login-form, #connection-form {
@@ -319,16 +365,6 @@ hr.separator-2 {
     padding-bottom: 1rem;
 }
 
-#save-btn, #login-btn, #reconnect-btn {
-    background: #4A4A4A;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    height: 1.5rem;
-    width: 4rem;
-    text-align: center;
-    padding-top: 0.2rem;
-}
 #reconnect-btn {
 	width: 6rem;
 }
@@ -683,6 +719,29 @@ ul.nav-department  ul.nav-functional-area li{
 	margin: 0.5em;
 }
 
+#button-container{
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.button {
+	border-radius: 2px;
+	border: 1px solid transparent;
+	padding: 0.5rem 1rem;
+}
+
+.button-orange{
+	background-color: #FF9366;
+	color: #fff;
+}
+
+.button-gray{
+	background-color: #b8bbbb;
+	color: #2A2A2A;
+}
+
+.
+
 .hidden {
 	display: none !important;
 }
@@ -691,6 +750,10 @@ ul.nav-department  ul.nav-functional-area li{
 
     #content {
         margin-top: 0.6rem;
+    }
+    
+    #login-container {
+        max-width: 400px;
     }
 
 }
