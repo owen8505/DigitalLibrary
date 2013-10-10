@@ -2,7 +2,8 @@
 	<header>
         <div id="header-wrapper">
             <h1>
-                Digital <span class="text-bold">Library</span>
+                <img src="img/SecureGOV-logo.png" alt="SecureGov App" >
+                SecureGOV
             </h1>
         </div>
     </header>
@@ -12,11 +13,13 @@
         		{{message}}
         	</div>
             <div id="login-user">
-                Pin:
-                <input id="login_user" name="login_user" type="password" pattern="\d*" ng-model="pin" autocorrect="off" autocapitalize="off" maxlength="4" required />
+                <input id="login_user" name="login_user" type="password" placeholder="Passcode" pattern="\d*" ng-model="pin" autocorrect="off" autocapitalize="off" maxlength="4" required  />
+                <input id="confirm_login_user" name="confirm_login_user" type="password" placeholder="Confirm Passcode" pattern="\d*" ng-model="pin" autocorrect="off" autocapitalize="off" maxlength="4" ng-show="newPin" required />
             </div>
-            <div id="save-btn" ng-click="save(pin)" ng-show="newPin">Save</div>
-            <div id="login-btn" ng-click="login(pin)" ng-hide="newPin">Login</div>
+            <div id="button-container">
+                <div id="save-btn" class="button button-orange" ng-click="save(pin)" ng-show="newPin">Save Passcode</div>
+                <div id="login-btn" class="button button-orange" ng-click="login(pin)" ng-hide="newPin"><span class="icon-lock"></span>Login</div>
+            </div>
         </form>
     </div>
 </div>
