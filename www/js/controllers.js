@@ -3,6 +3,7 @@ angular.module('App.controllers', ['ngResource'])
 	var data = {};
 	data.hideMenu = true;
     data.showLoader = false;
+    data.showDocumentOptions = false;
 	data.filter = "";
 	data.resultFilter = "";
     data.documentInfo = {};
@@ -139,21 +140,16 @@ angular.module('App.controllers', ['ngResource'])
 	// Funciones
 	/** Actualiza el path y ejecuta una función después de actualizarlo **/
 	$scope.updatePath = function (windowRef, funcionRef) {
-		alert('RF1');
-		windowRef.requestFileSystem(LocalFileSystem.PERSISTENT, 0, 
+		windowRef.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
 			function onFileSystemSuccess(fileSystem) {
-				alert('RF2');
 				fileSystem.root.getFile(
 				"index.html", {create: true, exclusive: false}, 
 				function gotFileEntry(fileEntry) {
-					alert('RF3');
 					var sPath = fileEntry.fullPath.replace("/index.html","");
 					$scope.data.setCache('file_path', sPath);
 					fileEntry.remove();
-					alert('RF4');
 				
 					funcionRef();
-					alert('RF5');
 				},
 				function(e) {
 					alert('DOWN1 error ' + e);
@@ -162,7 +158,6 @@ angular.module('App.controllers', ['ngResource'])
 			function(e) {
 				alert('DOWN0 error ' + e);
 			});
-		alert('RF10');
 	}
 	/** Verifica ¿Qué documentos sí están locales? **/
 	$scope.verifyLocalDocuments = function (windowRef, documentsToVerify) {
@@ -407,8 +402,18 @@ angular.module('App.controllers', ['ngResource'])
         }
     }
                             
-    $scope.showOptions = function (documento) {
+    $scope.showOptionsID = -1;
+                            
+    $scope.showOptions = function (elemento) {
+        $scope.data.showDocumentOptions = true;
+        $scope.showOptionsID = elemento.id;
+        //var elem = angular.element(e.target);
+
+    }
+                            
+    /*$scope.showOptions = function (documento) {
         $scope.data.documentInfo = documento;
         $location.path('/info');
-    }
+                            
+    }*/
 }]);

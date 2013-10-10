@@ -476,6 +476,19 @@ hr.separator-2 {
     overflow: hidden;
 }
 
+
+.document-options {
+    position: fixed;
+    float: left;
+    width: 40%;
+    height: 15%;
+    background: black;
+    border-radius: 10px;
+    top: 40%;
+    left: 30%;
+    z-index: 101;
+}
+
 .icons .document-info {
     background: black;
     width: 50px;
