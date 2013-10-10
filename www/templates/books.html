@@ -1,9 +1,13 @@
+<div id="overlay" ng-show="data.showLoader || data.showDocumentOptions" ng-click="hideOptions()"></div>
+<div id="loader" ng-show="data.showLoader">
+    <img src="img/loader.gif" alt="loader.gif"/>
+</div>
 <div id="content">
-    <div id="library-tools" class="hidden">
+    <!--div id="library-tools" class="hidden">
     	<div id="search-folders">
     		<input type="search" placeholder="Search documents" ng-model="data.filter" />
     	</div>
-    </div>
+    </div-->
 
 	<hr class="separator-1">
 
@@ -19,11 +23,11 @@
         </h4>
 		<hr class="separator-10">
 		<div id="tools" class="columns-12">
-			<div id="search-filter">
+			<!--div id="search-filter">
 				<form id="search-filter-form" class="hidden">
 					<input type="search" placeholder="Filter by keywords" ng-model="data.resultFilter">
 				</form>
-			</div>
+			</div-->
             <span class="icon-icons layout-btn" ng-class="selectedLayoutIcons" ng-click="changeLayout('icons')"></span>&nbsp;
             <span class="icon-list-2 layout-btn" ng-class="selectedLayoutList" ng-click="changeLayout('list')"></span>
 			<div class="clear"></div>
@@ -35,14 +39,15 @@
 						<div class="folder-image"></div>
 						<div class="folder-title">{{element.name}}</div>
 					</div>
-					<!--div id="document_{{element.id}}" ng-switch-default ng-click="downloadDocument(element)" ng-class="element.cssClass"-->
-					<div ng-switch-default ng-click="showOptions(element)">
+					<div id="document_{{element.id}}" ng-switch-default ng-class="element.cssClass" ng-click="showOptions(element)">
 						<div class="document-image">
                             <span class="icon-cloud-dl icon-download-document"></span>
                         </div>
 						<div class="document-title">{{element.name}}</div>
                         <div class="document-options" ng-show="showOptionsID == element.id">
-                            Options {{element.id}}
+                            <span class="icon-file-powerpoint" ng-click="downloadDocument(element)"></span>
+                            <a href="mailto:?subject=subject of the email&body=whatever body body" target="_blank"><span class="icon-envelope"></span></a>
+                            <span class="icon-info" ng-click="showDocumentInfo(element)"></span>
                         </div>
 					</div>
 				</ng-switch>

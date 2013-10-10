@@ -127,6 +127,7 @@ angular.module('App.controllers', ['ngResource'])
 	// Se guarda la variable data.
 	$scope.data = data;
 	$scope.data.showScrollLoader = false;
+    $scope.data.showDocumentOptions = false;
 	
 	// Variables
 	$scope.data.breadcrumb.departmentId = 0;
@@ -339,6 +340,7 @@ angular.module('App.controllers', ['ngResource'])
 	
 	/** Acción que se ejecuta para descargar un documento **/
 	$scope.downloadDocument = function(document) {
+        $scope.showOptionsID = -1;
 		documentHTML = angular.element($window.document.getElementById('document_' + document.id));
 		if (documentHTML.hasClass('downloading')) {
 			// Ignores click
@@ -411,9 +413,14 @@ angular.module('App.controllers', ['ngResource'])
 
     }
                             
-    /*$scope.showOptions = function (documento) {
+    $scope.showDocumentInfo = function (documento) {
         $scope.data.documentInfo = documento;
         $location.path('/info');
+    }
                             
-    }*/
+    $scope.hideOptions = function () {
+        $scope.data.showDocumentOptions = false;
+        $scope.showOptionsID = -1;
+    }
+                    
 }]);

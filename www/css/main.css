@@ -516,13 +516,24 @@ hr.separator-2 {
 .document-options {
     position: fixed;
     float: left;
-    width: 40%;
-    height: 15%;
+    width: 10rem;
+    height: 5rem;
     background: black;
+    color: white;
     border-radius: 10px;
     top: 40%;
-    left: 30%;
+    left: 25%;
     z-index: 101;
+    vertical-align: middle;
+}
+
+.document-options span {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 1.8rem;
+    margin-top: 1.6rem;
+    margin-left: 0.4rem;
+    margin-right: 0.4rem;
 }
 
 .icons .document-info {
