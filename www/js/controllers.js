@@ -143,6 +143,7 @@ angular.module('App.controllers', ['ngResource'])
 	$scope.updatePath = function (windowRef, funcionRef) {
 		windowRef.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
 			function onFileSystemSuccess(fileSystem) {
+				$scope.data.setCache('file_system', fileSystem);
 				fileSystem.root.getFile(
 				"index.html", {create: true, exclusive: false}, 
 				function gotFileEntry(fileEntry) {
@@ -316,26 +317,147 @@ angular.module('App.controllers', ['ngResource'])
 		}
 	}
 	
-	/** Descarga archivo **/
-	$scope.downloadFile = function (path, serverUrl, documentHTML) {
-		alert('Begins download: ' + "http://sap.mexusbio.org/DigitalLibraryServices/SharePointDataAccess.svc/Document?d=" + serverUrl);
-		var fileTransfer = new FileTransfer();
-		fileTransfer.download(
-			"http://sap.mexusbio.org/DigitalLibraryServices/SharePointDataAccess.svc/Document?d=" + serverUrl,
-			path + serverUrl,
-			function(theFile) {
-				alert("Download success: " + theFile.toURI());
-				documentHTML.removeClass('downloading');
-				documentHTML.addClass('local');
+	/**
+	$scope.bytesToString = function(bytes) {
+		// return String.fromCharCode.apply(null, bytes); // (1)
+		/ **
+		var stringArray = []; // (2)
+		for (var i = 0; i < bytes.length; i++) {
+			stringArray.push(String.fromCharCode(bytes[i]));
+		}
+		return stringArray;
+		** /
+		var stringArray = ""; // (3)
+		for (var i = 0; i < bytes.length; i++) {
+			stringArray += String.fromCharCode(bytes[i]);
+		}
+		return stringArray;
+	}
+	**/
+	
+	$scope.stringToFile = function(windowRef, fileName, stringArray, successFunction, errorFunction) {
+		windowRef.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
+			function onFileSystemSuccess(fileSystem) {
+				fileSystem.root.getFile(
+				fileName, {create: true, exclusive: false}, 
+				function gotFileEntry(fileEntry) {
+					alert('SI');
+					fileEntry.createWriter(
+						function(writer) {
+							console.log('2');
+							writer.onwrite = function(evt) {
+								console.log('SUCCESS');
+								successFunction();
+							};
+							console.log('3');
+							// writer.write(stringArray); // (1)
+							// writer.write(JSON.stringify(stringArray)); // (2)
+							writer.write(stringArray); // (3)
+							//for (var j = 0; j < stringArray.length; j++) {
+								//writer.write(stringArray);
+							//}
+							console.log('4');
+						},
+						function(error) {
+							console.log('ERROR2');
+							errorFunction();
+						});
+				},
+				function(e) {
+					errorFunction();
+				});
+			},
+			function(e) {
+				errorFunction();
+			});
+	/**
+		console.log('StringTOFILE');
+		console.log('fileSystem ' + fileSystem);
+		console.log('fileSystem2 ' + JSON.stringify(fileSystem));
+		console.log('fileName ' + fileName);
+		fileSystem.root.getFile(
+			fileName,
+			{create: true}, 
+			function(fileEntry) {
+				alert('SI');
+				fileEntry.createWriter(
+					function(writer) {
+						console.log('2');
+						writer.onwrite = function(evt) {
+							console.log('SUCCESS');
+							successFunction();
+						};
+						console.log('3');
+						writer.write(stringArray);
+						console.log('4');
+					},
+					function(error) {
+						console.log('ERROR2');
+						errorFunction();
+					});
 			},
 			function(error) {
-				alert("Download error: " + JSON.stringify(error));
-				documentHTML.removeClass('downloading');
-				console.log("download error source " + error.source);
-				console.log("download error target " + error.target);
-				console.log("upload error code: " + error.code);
-			}
-		);
+				alert('NO');
+				console.log('ERROR');
+				errorFunction();
+			});
+	**/
+	}
+	
+	/** Descarga archivo **/
+	$scope.downloadFile = function (path, serverUrl, documentHTML) {
+		var deferred = $q.defer();
+			var LibraryService = $resource(
+				"http://sap.mexusbio.org/DigitalLibraryServices/SharePointDataAccess.svc/Document?d=:d",
+				{}
+			).get(
+				{
+					d : serverUrl
+				},
+				function (event) {
+					deferred.resolve(event);
+				},
+				function (response) {
+					deferred.reject(response);
+				}
+			);
+			var LibraryService = deferred.promise;
+			LibraryService.then(
+				function(event) {
+					var byteArray = event.GetDocumentResult;
+					if (byteArray.length > 0) {
+						var parametros = {};
+						parametros['fileName'] = path + serverUrl;
+						parametros['byteArray'] = byteArray;
+						
+						cordova.exec(
+							// Register the callback handler
+							function callback(data) {
+								documentHTML.removeClass('downloading');
+								documentHTML.addClass('local');
+            				},
+            				// Register the errorHandler
+            				function errorHandler(err) {
+            					alert("Error converting string to file.");
+								documentHTML.removeClass('downloading');
+							},
+							// Define what class to route messages to
+							'FileWriter',
+							// Execute this method on the above class
+							'cordovaSetFileContents',
+							// An array containing one String (our newly created Date String).
+							[JSON.stringify(parametros)]
+						);
+					} else {
+						documentHTML.removeClass('downloading');
+					}
+				},
+				function(response) {
+					alert("Download error: " + JSON.stringify(response));
+					documentHTML.removeClass('downloading');
+					console.log("download error response " + response);
+				}
+			);
 	}
 	
 	/** Acción que se ejecuta para descargar un documento **/
@@ -347,15 +469,13 @@ angular.module('App.controllers', ['ngResource'])
 		} else if (documentHTML.hasClass('local')) {
 			if ($scope.data.isCache('file_path')) {
 				//alert('Opening file: ' + $scope.data.getCache('file_path') + document.serverRelativeUrl);
-				//$window.open($scope.data.getCache('file_path') + document.serverRelativeUrl, '_blank');
+				$window.open($scope.data.getCache('file_path') + document.serverRelativeUrl, '_blank');
 				//$window.location.href = $scope.data.getCache('file_path') + document.serverRelativeUrl;
-                $window.open(document.url, '_system');
 			} else {
 				$scope.updatePath($window, function () {
 					//alert('Opening file: ' + $scope.data.getCache('file_path') + document.serverRelativeUrl);
-					//$window.open($scope.data.getCache('file_path') + document.serverRelativeUrl, '_blank');
+					$window.open($scope.data.getCache('file_path') + document.serverRelativeUrl, '_blank');
 					//$window.location.href = $scope.data.getCache('file_path') + document.serverRelativeUrl;
-                    $window.open(document.url, '_system');
 				});
 			}
 			
