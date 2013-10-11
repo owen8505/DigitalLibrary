@@ -7,7 +7,7 @@ angular.module('App.controllers', ['ngResource'])
     data.showInfo = false;
 	data.filter = "";
 	data.resultFilter = "";
-    data.documentInfo = {};
+    data.selectedDocument = {};
 	
 	// Breadcrumbs
 	data.breadcrumb = {
@@ -61,12 +61,18 @@ angular.module('App.controllers', ['ngResource'])
 		$scope.message = "Please, set a secure passcode:";
 		$scope.newPin = true;
 	}
-	$scope.save = function(pin) {
-		if (pin.length == 4) {
-			$scope.data.setCache('pin', pin);
-			$location.path('/library');
+	$scope.savePin = function() {
+		if ($scope.pin.length == 4) {
+            if ($scope.pin == $scope.pinConfirmation) {
+                $scope.data.setCache('pin', $scope.pin);
+                $location.path('/library');
+            } else {
+                $scope.errorMessage = "The passcode and the passcode confirmation don't match.";
+                          window.scrollTo(0, 0);
+            }
 		} else {
-			alert("The pin must have 4 digits.");
+			$scope.errorMessage = "The pin must have 4 digits.";
+                          window.scrollTo(0, 0);
 		}
 	}
 	$scope.login = function(pin) {
@@ -116,7 +122,7 @@ angular.module('App.controllers', ['ngResource'])
         }
 	);
 }])
-.controller('LibraryCtrl', ['$scope', '$rootScope', '$location', '$resource', '$q', 'data', '$window', function ($scope, $rootScope, $location, $resource, $q, data, $window) {
+.controller('LibraryCtrl', ['$scope', '$rootScope', '$location', '$timeout', '$resource', '$q', 'data', '$window', function ($scope, $rootScope, $location, $timeout, $resource, $q, data, $window) {
 	// Se guarda la variable data.
 	$scope.data = data;
 	$scope.data.showScrollLoader = false;
@@ -130,7 +136,6 @@ angular.module('App.controllers', ['ngResource'])
 	$scope.clase = 'icons';
     $scope.selectedLayoutIcons = 'selected';
 	$scope.selectedLayoutList = '';
-    $scope.showOptionsID = -1;
                             
 	// Funciones
 	/** Actualiza el path y ejecuta una función después de actualizarlo **/
@@ -245,7 +250,6 @@ angular.module('App.controllers', ['ngResource'])
 		$scope.data.breadcrumb.folderId = documentFolderId;
 		$scope.data.breadcrumb.folderName = documentFolderName;
 		$scope.data.breadcrumb.folderUrl = documentFolderUrl;
-        $scope.data.breadcrumb.lastId = lastId;
 		$scope.data.currentDepartmentUrl = departmentUrl;
 		
 		if (!$scope.data.showLoader && !$scope.data.showScrollLoader) {
@@ -284,13 +288,13 @@ angular.module('App.controllers', ['ngResource'])
 						$scope.data.scrollLastId = event.GetDocumentsResult.lastID;
 						$scope.data.showLoader = false;
 						$scope.data.showScrollLoader = false;
+                        $scope.verifyDocuments($window, $scope.elements);
+
 				
 						$scope.data.scrollListen = true;
 						$scope.data.scrollHandler = function(data) {
 							$scope.searchDocuments(data.breadcrumb.folderId, data.breadcrumb.folderName, data.breadcrumb.folderUrl, data.currentDepartmentUrl, data.scrollLastId);
 						};
-						
-						$scope.verifyDocuments($window, event.GetDocumentsResult.items);
 					} else {
 						if ($scope.elements.length == 0) {
 							$scope.data.breadcrumb.totalElements = 0;
@@ -313,18 +317,14 @@ angular.module('App.controllers', ['ngResource'])
 	
 	/** Descarga archivo **/
 	$scope.downloadFile = function (path, serverUrl, documentHTML) {
-		alert('Begins download: ' + "http://sap.mexusbio.org/DigitalLibraryServices/SharePointDataAccess.svc/Document?d=" + serverUrl);
-		var fileTransfer = new FileTransfer();
+        var fileTransfer = new FileTransfer();
 		fileTransfer.download(
 			"http://sap.mexusbio.org/DigitalLibraryServices/SharePointDataAccess.svc/Document?d=" + serverUrl,
 			path + serverUrl,
 			function(theFile) {
-				alert("Download success: " + theFile.toURI());
 				documentHTML.removeClass('downloading');
 				documentHTML.addClass('local');
-                $scope.showOptionsID = -1;
-                $scope.data.showDocumentOptions = false;
-                $scope.verifyLocalDocuments();
+                $scope.verifyDocuments($window, $scope.elements);
 			},
 			function(error) {
 				alert("Download error: " + JSON.stringify(error));
@@ -338,7 +338,6 @@ angular.module('App.controllers', ['ngResource'])
 	
 	/** Acción que se ejecuta para descargar un documento **/
 	$scope.downloadDocument = function(document) {
-        $scope.showOptionsID = -1;
 		documentHTML = angular.element($window.document.getElementById('document_' + document.id));
 		if (documentHTML.hasClass('downloading')) {
 			// Ignores click
@@ -372,6 +371,7 @@ angular.module('App.controllers', ['ngResource'])
 			}
 			$scope.data.setCache('last_viewed', arreglo);
 		} else {
+            $scope.hideOptions();
 			documentHTML.addClass('downloading');
 			if ($scope.data.isCache('file_path')) {
 				$scope.downloadFile($scope.data.getCache('file_path'), document.serverRelativeUrl, documentHTML);
@@ -402,25 +402,25 @@ angular.module('App.controllers', ['ngResource'])
         }
     }
                             
-    $scope.showOptions = function (elemento) {
+    $scope.showOptions = function (document) {
         $scope.data.showDocumentOptions = true;
-        $scope.showOptionsID = elemento.id;
-        //var elem = angular.element(e.target);
-
+        $scope.data.selectedDocument = document;
+    }
+               
+    $scope.showDocument = function() {
+        $scope.downloadDocument($scope.data.selectedDocument);
     }
                             
-    $scope.showDocumentInfo = function (documento) {
-        $scope.data.documentInfo = documento;
+    $scope.showDocumentInfo = function () {
         $scope.data.showInfo = true;
     }
                             
     $scope.hideOptions = function () {
         $scope.data.showDocumentOptions = false;
-        $scope.showOptionsID = -1;
     }
             
-    $scope.sendMail = function(documento) {
-        window.plugins.emailComposer.showEmailComposerWithCallback(function(result){console.log(result);},"Document shared - " + documento.name,"I would like to share a document with you",[],[],[],false,[$scope.data.getCache('file_path') + documento.serverRelativeUrl]);
+    $scope.sendMail = function() {
+        window.plugins.emailComposer.showEmailComposerWithCallback(function(result){console.log(result);},"Document shared - " + $scope.data.selectedDocument.name,"I would like to share a document with you",[],[],[],false,[$scope.data.getCache('file_path') + $scope.data.selectedDocument.serverRelativeUrl]);
     }
                             
     $scope.back = function(){
