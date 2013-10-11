@@ -4,6 +4,7 @@ angular.module('App.controllers', ['ngResource'])
 	data.hideMenu = true;
     data.showLoader = false;
     data.showDocumentOptions = false;
+    data.showInfo = false;
 	data.filter = "";
 	data.resultFilter = "";
     data.documentInfo = {};
@@ -14,7 +15,8 @@ angular.module('App.controllers', ['ngResource'])
 		departmentName : "",
 		folderId : 0,
 		folderName : "",
-		totalElements : 0
+		totalElements : 0,
+        lastId : 0
 	}
 	data.currentDepartmentUrl = '';
 	
@@ -83,15 +85,6 @@ angular.module('App.controllers', ['ngResource'])
 		$location.path('/');
 	}
 }])
-.controller('InfoCtrl', ['$scope', '$location', 'data', function ($scope, $location, data) {
-    // Funciones
-    $scope.data = data;
-    // console.log(JSON.stringify(data.documentInfo));
-    $scope.back = function () {
-        history.back();
-    }
-    
-}])
 .controller('MenuCtrl', ['$scope', '$location', '$resource', '$q','data', function ($scope, $location, $resource, $q, data) {
 	// Se guarda la variable data.
 	$scope.data = data;
@@ -123,7 +116,7 @@ angular.module('App.controllers', ['ngResource'])
         }
 	);
 }])
-.controller('LibraryCtrl', ['$scope', '$location', '$resource', '$q', 'data', '$window', function ($scope, $location, $resource, $q, data, $window) {
+.controller('LibraryCtrl', ['$scope', '$rootScope', '$location', '$resource', '$q', 'data', '$window', function ($scope, $rootScope, $location, $resource, $q, data, $window) {
 	// Se guarda la variable data.
 	$scope.data = data;
 	$scope.data.showScrollLoader = false;
@@ -137,6 +130,7 @@ angular.module('App.controllers', ['ngResource'])
 	$scope.clase = 'icons';
     $scope.selectedLayoutIcons = 'selected';
 	$scope.selectedLayoutList = '';
+    $scope.showOptionsID = -1;
                             
 	// Funciones
 	/** Actualiza el path y ejecuta una función después de actualizarlo **/
@@ -252,6 +246,7 @@ angular.module('App.controllers', ['ngResource'])
 		$scope.data.breadcrumb.folderId = documentFolderId;
 		$scope.data.breadcrumb.folderName = documentFolderName;
 		$scope.data.breadcrumb.folderUrl = documentFolderUrl;
+        $scope.data.breadcrumb.lastId = lastId;
 		$scope.data.currentDepartmentUrl = departmentUrl;
 		
 		if (!$scope.data.showLoader && !$scope.data.showScrollLoader) {
@@ -317,93 +312,6 @@ angular.module('App.controllers', ['ngResource'])
 		}
 	}
 	
-	/**
-	$scope.bytesToString = function(bytes) {
-		// return String.fromCharCode.apply(null, bytes); // (1)
-		/ **
-		var stringArray = []; // (2)
-		for (var i = 0; i < bytes.length; i++) {
-			stringArray.push(String.fromCharCode(bytes[i]));
-		}
-		return stringArray;
-		** /
-		var stringArray = ""; // (3)
-		for (var i = 0; i < bytes.length; i++) {
-			stringArray += String.fromCharCode(bytes[i]);
-		}
-		return stringArray;
-	}
-	**/
-	
-	$scope.stringToFile = function(windowRef, fileName, stringArray, successFunction, errorFunction) {
-		windowRef.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
-			function onFileSystemSuccess(fileSystem) {
-				fileSystem.root.getFile(
-				fileName, {create: true, exclusive: false}, 
-				function gotFileEntry(fileEntry) {
-					alert('SI');
-					fileEntry.createWriter(
-						function(writer) {
-							console.log('2');
-							writer.onwrite = function(evt) {
-								console.log('SUCCESS');
-								successFunction();
-							};
-							console.log('3');
-							// writer.write(stringArray); // (1)
-							// writer.write(JSON.stringify(stringArray)); // (2)
-							writer.write(stringArray); // (3)
-							//for (var j = 0; j < stringArray.length; j++) {
-								//writer.write(stringArray);
-							//}
-							console.log('4');
-						},
-						function(error) {
-							console.log('ERROR2');
-							errorFunction();
-						});
-				},
-				function(e) {
-					errorFunction();
-				});
-			},
-			function(e) {
-				errorFunction();
-			});
-	/**
-		console.log('StringTOFILE');
-		console.log('fileSystem ' + fileSystem);
-		console.log('fileSystem2 ' + JSON.stringify(fileSystem));
-		console.log('fileName ' + fileName);
-		fileSystem.root.getFile(
-			fileName,
-			{create: true}, 
-			function(fileEntry) {
-				alert('SI');
-				fileEntry.createWriter(
-					function(writer) {
-						console.log('2');
-						writer.onwrite = function(evt) {
-							console.log('SUCCESS');
-							successFunction();
-						};
-						console.log('3');
-						writer.write(stringArray);
-						console.log('4');
-					},
-					function(error) {
-						console.log('ERROR2');
-						errorFunction();
-					});
-			},
-			function(error) {
-				alert('NO');
-				console.log('ERROR');
-				errorFunction();
-			});
-	**/
-	}
-	
 	/** Descarga archivo **/
 	$scope.downloadFile = function (path, serverUrl, documentHTML) {
 		var deferred = $q.defer();
@@ -435,6 +343,9 @@ angular.module('App.controllers', ['ngResource'])
 							function callback(data) {
 								documentHTML.removeClass('downloading');
 								documentHTML.addClass('local');
+								$scope.showOptionsID = -1;
+                				$scope.data.showDocumentOptions = false;
+                				$scope.verifyLocalDocuments();
             				},
             				// Register the errorHandler
             				function errorHandler(err) {
@@ -524,8 +435,6 @@ angular.module('App.controllers', ['ngResource'])
         }
     }
                             
-    $scope.showOptionsID = -1;
-                            
     $scope.showOptions = function (elemento) {
         $scope.data.showDocumentOptions = true;
         $scope.showOptionsID = elemento.id;
@@ -535,12 +444,20 @@ angular.module('App.controllers', ['ngResource'])
                             
     $scope.showDocumentInfo = function (documento) {
         $scope.data.documentInfo = documento;
-        $location.path('/info');
+        $scope.data.showInfo = true;
     }
                             
     $scope.hideOptions = function () {
         $scope.data.showDocumentOptions = false;
         $scope.showOptionsID = -1;
+    }
+            
+    $scope.sendMail = function(documento) {
+        window.plugins.emailComposer.showEmailComposerWithCallback(function(result){console.log(result);},"Document shared - " + documento.name,"I would like to share a document with you",[],[],[],false,[$scope.data.getCache('file_path') + documento.serverRelativeUrl]);
+    }
+                            
+    $scope.back = function(){
+        $scope.data.showInfo = false;
     }
                     
 }]);

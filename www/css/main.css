@@ -525,6 +525,7 @@ hr.separator-2 {
     left: 25%;
     z-index: 101;
     vertical-align: middle;
+  text-align: center;
 }
 
 .document-options span {
@@ -637,6 +638,17 @@ hr.separator-2 {
 
 #documentInfo {
     color: black;
+}
+
+#documentInfo {
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+  background: white;
+    color: black;
+    z-index: 200;
 }
 
 #info-container div{

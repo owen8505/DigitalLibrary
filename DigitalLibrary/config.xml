@@ -114,6 +114,9 @@
     <feature name="FileWriter">
         <param name="ios-package" value="FileWriter" />
     </feature>
+    <feature name="EmailComposer">
+        <param name="ios-package" value="EmailComposer"/>
+    </feature>
     <!-- Deprecated plugins element. REmove in 3.0 -->
     <plugins>
     </plugins>
