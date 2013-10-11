@@ -142,6 +142,7 @@ angular.module('App.controllers', ['ngResource'])
 	$scope.updatePath = function (windowRef, funcionRef) {
 		windowRef.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
 			function onFileSystemSuccess(fileSystem) {
+				$scope.data.setCache('file_system', fileSystem);
 				fileSystem.root.getFile(
 				"index.html", {create: true, exclusive: false}, 
 				function gotFileEntry(fileEntry) {
@@ -334,6 +335,61 @@ angular.module('App.controllers', ['ngResource'])
 				console.log("upload error code: " + error.code);
 			}
 		);
+		var deferred = $q.defer();
+			var LibraryService = $resource(
+				"http://sap.mexusbio.org/DigitalLibraryServices/SharePointDataAccess.svc/Document?d=:d",
+				{}
+			).get(
+				{
+					d : serverUrl
+				},
+				function (event) {
+					deferred.resolve(event);
+				},
+				function (response) {
+					deferred.reject(response);
+				}
+			);
+			var LibraryService = deferred.promise;
+			LibraryService.then(
+				function(event) {
+					var byteArray = event.GetDocumentResult;
+					if (byteArray.length > 0) {
+						var parametros = {};
+						parametros['fileName'] = path + serverUrl;
+						parametros['byteArray'] = byteArray;
+						
+						cordova.exec(
+							// Register the callback handler
+							function callback(data) {
+								documentHTML.removeClass('downloading');
+								documentHTML.addClass('local');
+								$scope.showOptionsID = -1;
+                				$scope.data.showDocumentOptions = false;
+                				$scope.verifyLocalDocuments();
+            				},
+            				// Register the errorHandler
+            				function errorHandler(err) {
+            					alert("Error converting string to file.");
+								documentHTML.removeClass('downloading');
+							},
+							// Define what class to route messages to
+							'FileWriter',
+							// Execute this method on the above class
+							'cordovaSetFileContents',
+							// An array containing one String (our newly created Date String).
+							[JSON.stringify(parametros)]
+						);
+					} else {
+						documentHTML.removeClass('downloading');
+					}
+				},
+				function(response) {
+					alert("Download error: " + JSON.stringify(response));
+					documentHTML.removeClass('downloading');
+					console.log("download error response " + response);
+				}
+			);
 	}
 	
 	/** Acción que se ejecuta para descargar un documento **/
@@ -344,15 +400,13 @@ angular.module('App.controllers', ['ngResource'])
 		} else if (documentHTML.hasClass('local')) {
 			if ($scope.data.isCache('file_path')) {
 				//alert('Opening file: ' + $scope.data.getCache('file_path') + document.serverRelativeUrl);
-				//$window.open($scope.data.getCache('file_path') + document.serverRelativeUrl, '_blank');
+				$window.open($scope.data.getCache('file_path') + document.serverRelativeUrl, '_blank');
 				//$window.location.href = $scope.data.getCache('file_path') + document.serverRelativeUrl;
-                $window.open(document.url, '_system');
 			} else {
 				$scope.updatePath($window, function () {
 					//alert('Opening file: ' + $scope.data.getCache('file_path') + document.serverRelativeUrl);
-					//$window.open($scope.data.getCache('file_path') + document.serverRelativeUrl, '_blank');
+					$window.open($scope.data.getCache('file_path') + document.serverRelativeUrl, '_blank');
 					//$window.location.href = $scope.data.getCache('file_path') + document.serverRelativeUrl;
-                    $window.open(document.url, '_system');
 				});
 			}
 			
