@@ -322,6 +322,9 @@ angular.module('App.controllers', ['ngResource'])
 				alert("Download success: " + theFile.toURI());
 				documentHTML.removeClass('downloading');
 				documentHTML.addClass('local');
+                $scope.showOptionsID = -1;
+                $scope.data.showDocumentOptions = false;
+                $scope.verifyLocalDocuments();
 			},
 			function(error) {
 				alert("Download error: " + JSON.stringify(error));
