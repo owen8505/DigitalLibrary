@@ -171,6 +171,7 @@ you can use the generic selector below, but it's slower:
 body,html {
 	background: #fff;
 	background-size: 100%;
+    height: 100%;
 	margin: 0;
 	padding: 0;
 
@@ -296,6 +297,7 @@ hr.separator-2 {
 #login {
     position: absolute;
     width: 100%;
+    height: 100%;
     padding-left: 5%;
     padding-right: 5%;
     margin: 0 auto;
@@ -354,10 +356,6 @@ hr.separator-2 {
     margin: 0 auto;
     padding-top: 1rem;
     padding-bottom: 1rem;
-}
-
-#reconnect-btn {
-	width: 6rem;
 }
 
 .css-form input.ng-invalid.ng-dirty {

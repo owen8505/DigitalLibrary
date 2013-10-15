@@ -10,8 +10,11 @@
 	<div id="topMenu-right" ng-hide="data.hideMenu">
 		<ul class="nav-department">
 			<li ng-click="searchDocumentFolder(0, 'Last Reviewed')">
-				<span><span class="icon-star"></span> Last Reviewed</span>
+				<span><span class="icon-bookmark"></span> Last Reviewed</span>
 			</li>
+            <li ng-click="getMyDocuments()">
+                <span><span class="icon-books"></span> My Documents</span>
+            </li>
 			<li ng-repeat="department in menu" ng-hide="department.functionalArea.length == 0">
                 <hr class="separator-1">
 				<span><span class="icon-books"></span> {{department.name}}</span>

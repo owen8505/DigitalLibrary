@@ -251,6 +251,44 @@ angular.module('App.controllers', ['ngResource'])
 			);
 		}
 	}
+                            
+    /** Obtiene la ruta de MySite **/
+    $scope.getMyDocuments = function(){
+        var mySiteURL = $scope.data.getCache('mySiteURL');
+        
+        if($scope.data.mySiteURL == null || $scope.data.mySiteURL == "undefined"){
+                            
+            var mySiteServiceURL = "http://sap.mexusbio.org/DigitalLibraryServices/SharePointDataAccess.svc/MyDocuments?u=:u";
+            var deferred = $q.defer();
+            var MySiteService = $resource(mySiteServiceURL,{})
+            .get({u:($scope.data.getCache('user'))},
+                function (event) {
+                 deferred.resolve(event);
+                },
+                function (response) {
+                 deferred.reject(response);
+                }
+                                 
+            );
+                            
+            var MySiteServicePromise = deferred.promise;
+            MySiteServicePromise.then(
+                function (event) {
+                    mySiteURL = event.GetMyDocumentsResult;
+                    $scope.data.setCache('mySiteURL', mySiteURL);
+                    deferred.resolve(event);
+                },
+                                                      
+                function (response) {
+                    deferred.reject(response);
+                }
+                                                      
+            );
+        }
+                            console.log(mySiteURL);
+        $window.open(mySiteURL, '_system');
+                                    
+    }
 	
 	/** Busca documentos **/
 	$scope.searchDocuments = function(documentFolderId, documentFolderName, documentFolderUrl, departmentUrl, lastId) {
@@ -408,7 +446,7 @@ angular.module('App.controllers', ['ngResource'])
 		} else if (documentHTML.hasClass('local')) {
 			if ($scope.data.isCache('file_path')) {
 				//alert('Opening file: ' + $scope.data.getCache('file_path') + document.serverRelativeUrl);
-				$window.open($scope.data.getCache('file_path') + document.serverRelativeUrl, '_blank');
+				$window.open($scope.data.getCache('file_path') + encodeURI(document.serverRelativeUrl), '_blank');
 				//$window.location.href = $scope.data.getCache('file_path') + document.serverRelativeUrl;
 			} else {
 				$scope.updatePath($window, function () {
