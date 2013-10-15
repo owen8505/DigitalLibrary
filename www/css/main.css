@@ -317,8 +317,8 @@ hr.separator-2 {
 
 #login h1 > img{
     display: block;
-    max-width: 100px;
-    margin: 0.5rem auto 1rem;
+    max-width: 70px;
+    margin: 0.5rem auto 0.5rem;
 }
 
 #login-container {
@@ -332,20 +332,14 @@ hr.separator-2 {
 }
 
 #login-container input{
+    border-radius: 5px;
     display: block;
     height: 36px;
     margin: 0rem auto;
 }
 
 #login-container input:first-child{
-    border: none;
-    border-radius: 5px 5px 0px 0px;
-    border-bottom: none;
-    box-shadow: none;
-}
-
-#login-container input:last-child{
-    border-radius: 0px 0px 5px 5px;
+    margin-bottom: 0.5rem;
 }
 
 #login-container #button-container .button{
@@ -383,13 +377,20 @@ hr.separator-2 {
 }
 
 #library-header {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     width: 100%;
     text-align: center;
     vertical-align: middle;
-  background-color: black;
-  color: white;
+    background: #53607b; /* Old browsers */
+    background: -moz-linear-gradient(top,  #53607b 0%, #2a303e 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#53607b), color-stop(100%,#2a303e)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #53607b 0%,#2a303e 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #53607b 0%,#2a303e 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #53607b 0%,#2a303e 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #53607b 0%,#2a303e 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#53607b', endColorstr='#2a303e',GradientType=0 ); /* IE6-9 */
+    color: white;
 }
 
 #library-tools {
@@ -512,17 +513,18 @@ hr.separator-2 {
 
 .document-options {
     position: fixed;
-    float: left;
     width: 10rem;
     height: 5rem;
     background: black;
     color: white;
     border-radius: 10px;
-    top: 40%;
-    left: 25%;
+    left: 50%;
+    top:50%;
     z-index: 101;
     vertical-align: middle;
-  text-align: center;
+    text-align: center;
+    margin-left:-80px;
+    margin-top:-50px;
 }
 
 .document-options span {
@@ -632,38 +634,55 @@ hr.separator-2 {
 	//background-size: 600px;
 }
 
-
 #documentInfo {
-    color: black;
-}
-
-#documentInfo {
+    background-color: #2A303E;
     position: fixed;
     top: 0px;
     bottom: 0px;
     left: 0px;
     right: 0px;
-  background: white;
     color: black;
     z-index: 200;
 }
 
-#info-container div{
-    margin-top: 1rem;
+#info-container{
+    margin: 1rem;
 }
 
 #info-container .title{
+    color: #FFF;
     font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+#info-container .info-label{
+    color: #AAAAAA;
+    font-weight: bold;
+    margin: 0.5rem 0rem 0.2rem;
+}
+
+#info-container .info-description{
+    color: #DDDDDD;
+    font-size: 0.8rem;
+    margin-bottom: 1.1rem;
 }
 
 
-
 #topMenu-bar {
-	background: black;
+	
     padding-top: 1rem;
     padding-bottom: 1rem;
     width: 100%;
     text-align: right;
+    background: #53607b; /* Old browsers */
+    background: -moz-linear-gradient(top,  #53607b 0%, #2a303e 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#53607b), color-stop(100%,#2a303e)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #53607b 0%,#2a303e 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #53607b 0%,#2a303e 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #53607b 0%,#2a303e 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #53607b 0%,#2a303e 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#53607b', endColorstr='#2a303e',GradientType=0 ); /* IE6-9 */
+
 }
 
 #topMenu-bar .title {
@@ -681,8 +700,8 @@ hr.separator-2 {
 
 #menu-btn {
     font-size: 0.8rem;
-    background: #2a2a2a;
-    color: #d3d3d3;
+    background: #2A303E;
+    color: white;
 
     text-align: center;
     padding: 0.3rem 0.6rem;
@@ -702,7 +721,7 @@ hr.separator-2 {
     right: 0px;
     bottom: 0px;
     top: 3rem;
-	background: black;
+    background: #2A303E;
     text-align: left;
     
     overflow: none;
@@ -718,7 +737,7 @@ ul.nav-department{
 }
 
 ul.nav-department > li{
-	color: #707777;
+	color: #DDDFE5;
     margin-top: 1rem;
 	font-size: 1.2rem;
 	font-weight: normal;

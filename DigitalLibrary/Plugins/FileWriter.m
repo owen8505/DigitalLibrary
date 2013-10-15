@@ -85,6 +85,8 @@
         bytes[i] = (uint8_t)byte;
     }
     
+    
+    
     NSData* fileData = [NSData dataWithBytes:(const void *)bytes length:sizeof(unsigned char)*c];
     
     [fileData             writeToFile : fileName

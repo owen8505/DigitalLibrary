@@ -62,12 +62,19 @@ angular.module('App.controllers', ['ngResource'])
 		$scope.newPin = true;
 	}
 	$scope.savePin = function() {
+        if($scope.user.length < 1){
+            $scope.errorMessage = "The user muste be placed";
+            window.scrollTo(0, 0);
+        }else{
+            $scope.data.setCache('user',$scope.user);
+        }
+                          
 		if ($scope.pin.length == 4) {
             if ($scope.pin == $scope.pinConfirmation) {
                 $scope.data.setCache('pin', $scope.pin);
                 $location.path('/library');
             } else {
-                $scope.errorMessage = "The passcode and the passcode confirmation don't match.";
+                $scope.errorMessage = "The passcode and the passcode confirmation do not match.";
                           window.scrollTo(0, 0);
             }
 		} else {
@@ -76,7 +83,7 @@ angular.module('App.controllers', ['ngResource'])
 		}
 	}
 	$scope.login = function(pin) {
-		var compare = $scope.data.getCache('pin');
+		var compare = $scope.data.getCache('pin');                          
 		if (compare == pin) {
 			$location.path('/library');
 		} else {
@@ -320,7 +327,7 @@ angular.module('App.controllers', ['ngResource'])
 	$scope.downloadFile = function (path, serverUrl, documentHTML) {
         var fileTransfer = new FileTransfer();
 		fileTransfer.download(
-			"http://sap.mexusbio.org/DigitalLibraryServices/SharePointDataAccess.svc/Document?d=" + serverUrl,
+			"http://sap.mexusbio.org/DigitalLibraryServices/SharePointDataAccess.svc/Document?d=" + encodeURI(serverUrl),
 			path + serverUrl,
 			function(theFile) {
 				documentHTML.removeClass('downloading');
@@ -330,6 +337,7 @@ angular.module('App.controllers', ['ngResource'])
 			function(error) {
 				alert("Download error: " + JSON.stringify(error));
 				documentHTML.removeClass('downloading');
+                console.log("ERROR: " + error);
 				console.log("download error source " + error.source);
 				console.log("download error target " + error.target);
 				console.log("upload error code: " + error.code);
@@ -356,7 +364,7 @@ angular.module('App.controllers', ['ngResource'])
 					var byteArray = event.GetDocumentResult;
 					if (byteArray.length > 0) {
 						var parametros = {};
-						parametros['fileName'] = path + serverUrl;
+                        parametros['fileName'] = path + serverUrl;
 						parametros['byteArray'] = byteArray;
 						
 						cordova.exec(

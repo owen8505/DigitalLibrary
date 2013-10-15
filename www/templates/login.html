@@ -12,7 +12,12 @@
         	<div class="message">
         		{{message}}
         	</div>
+            <div class="errorMessage">
+        		{{errorMessage}}
+        	</div>
             <div id="login-user">
+                <input id="user" name="user" type="text" placeholder="SameP@ge User" ng-show="newPin" autocorrect="off" ng-model="user" autocapitalize="off" required />
+                <br/>
                 <input id="login_user" name="login_user" type="password" placeholder="Passcode" pattern="\d*" ng-model="pin" autocorrect="off" autocapitalize="off" maxlength="4" required  />
                 <input id="confirm_login_user" name="confirm_login_user" type="password" placeholder="Confirm Passcode" pattern="\d*" ng-model="pinConfirmation" autocorrect="off" autocapitalize="off" maxlength="4" ng-show="newPin" required />
             </div>
@@ -20,9 +25,6 @@
                 <div id="save-btn" class="button button-orange" ng-click="savePin()" ng-show="newPin">Save Passcode</div>
                 <div id="login-btn" class="button button-orange" ng-click="login(pin)" ng-hide="newPin"><span class="icon-lock"></span>Login</div>
             </div>
-            <div class="errorMessage">
-        		{{errorMessage}}
-        	</div>
         </form>
     </div>
 </div>

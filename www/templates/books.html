@@ -12,31 +12,57 @@
 
 <div id="documentInfo" ng-show="data.showInfo">
 	<div id="library-header">
-        Digital Library
         <span id="menu-btn-container">
             <span id="menu-btn" ng-click="back()">
                 Back
             </span>
         </span>
+        <span class="title">SecureGOV</span>
     </div>
     
     <hr class="separator-1" />
     
     <div id="info-container">
         <div class="title">Document Information</div>
-        <div ng-show="data.selectedDocument.name">Name: {{data.selectedDocument.name}}</div>
-        <div ng-show="data.selectedDocument.acquisitionID">Acquisition ID: {{data.selectedDocument.acquisitionID}}</div>
-        <div ng-show="data.selectedDocument.country">Country: {{data.selectedDocument.country}}</div>
-        <div ng-show="data.selectedDocument.creationDate">Creation Date: {{data.selectedDocument.creationDate}}</div>
-        <div ng-show="data.selectedDocument.modified">Modified: {{data.selectedDocument.modified}}</div>
-        <div ng-show="data.selectedDocument.modifiedBy">Modified By: {{data.selectedDocument.modifiedBy}}</div>
-        <div ng-show="data.selectedDocument.po">Po: {{data.selectedDocument.po}}</div>
-        <div ng-show="data.selectedDocument.pr">Pr: {{data.selectedDocument.pr}}</div>
-        <div ng-show="data.selectedDocument.projectCode">Project Code: {{data.selectedDocument.projectCode}}</div>
-        <div ng-show="data.selectedDocument.projectCoordinator">Project Coordinator: {{data.selectedDocument.projectCoordinator}}</div>
-        <div ng-show="data.selectedDocument.recipient">Recipient: {{data.selectedDocument.recipient}}</div>
-        <div ng-show="data.selectedDocument.subrecipient">Subrecipient: {{data.selectedDocument.subrecipient}}</div>
-        <div ng-show="data.selectedDocument.referenceID">Reference ID: {{data.selectedDocument.referenceID}}</div>
+        
+        <div class="info-label" ng-show="data.selectedDocument.name">Name:</div>
+        <div class="info-description" ng-show="data.selectedDocument.name">{{data.selectedDocument.name}}</div>
+        
+        <div class="info-label" ng-show="data.selectedDocument.acquisitionID">Acquisition ID:</div>
+        <div class="info-description" ng-show="data.selectedDocument.acquisitionID">{{data.selectedDocument.acquisitionID}}</div>
+        
+        <div class="info-label" ng-show="data.selectedDocument.country">Country:</div>
+        <div class="info-description" ng-show="data.selectedDocument.country">{data.selectedDocument.country}}</div>
+        
+        <div class="info-label" ng-show="data.selectedDocument.creationDate">Creation Date:</div>
+        <div class="info-description" ng-show="data.selectedDocument.creationDate">{{data.selectedDocument.creationDate}}</div>
+        
+        <div class="info-label" ng-show="data.selectedDocument.modified">Modified:</div>
+        <div class="info-description" ng-show="data.selectedDocument.modified">{{data.selectedDocument.modified}}</div>
+        
+        <div class="info-label" ng-show="data.selectedDocument.modifiedBy">Modified By:</div>
+        <div class="info-description" ng-show="data.selectedDocument.modifiedBy">{{data.selectedDocument.modifiedBy}}</div>
+        
+        <div class="info-label" ng-show="data.selectedDocument.po">Po:</div>
+        <div class="info-description" ng-show="data.selectedDocument.po">{{data.selectedDocument.po}}</div>
+        
+        <div class="info-label" ng-show="data.selectedDocument.pr">Pr:</div>
+        <div class="info-description" ng-show="data.selectedDocument.pr">{{data.selectedDocument.pr}}</div>
+        
+        <div class="info-label" ng-show="data.selectedDocument.projectCode">Project Code:</div>
+        <div class="info-description" ng-show="data.selectedDocument.projectCode">{{data.selectedDocument.projectCode}}</div>
+        
+        <div class="info-label" ng-show="data.selectedDocument.projectCoordinator">Project Coordinator:</div>
+        <div class="info-description" ng-show="data.selectedDocument.projectCoordinator">{{data.selectedDocument.projectCoordinator}}</div>
+        
+        <div class="info-label" ng-show="data.selectedDocument.recipient">Recipient:</div>
+        <div class="info-description" ng-show="data.selectedDocument.recipient">{{data.selectedDocument.recipient}}</div>
+        
+        <div class="info-label" ng-show="data.selectedDocument.subrecipient">Subrecipient:</div>
+        <div class="info-description" ng-show="data.selectedDocument.subrecipient">{{data.selectedDocument.subrecipient}}</div>
+        
+        <div class="info-label" ng-show="data.selectedDocument.referenceID">Reference ID:</div>
+        <div class="info-description" ng-show="data.selectedDocument.referenceID">{{data.selectedDocument.referenceID}}</div>
     </div>
     
 </div>
