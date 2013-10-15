@@ -111,7 +111,7 @@
             for (NSString* path in attachmentPaths) {
                 @try {
                     NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
-                    [mailComposer addAttachmentData:data mimeType:[self getMimeTypeFromFileExtension:[path pathExtension]] fileName:[NSString stringWithFormat:@"attachment%d.%@", counter, [path pathExtension]]];
+                    [mailComposer addAttachmentData:data mimeType:[self getMimeTypeFromFileExtension:[path pathExtension]] fileName:[NSString stringWithFormat:@"%@.%@", [[path lastPathComponent] stringByDeletingPathExtension], [path pathExtension]]];
                     counter++;
                 }
                 @catch (NSException *exception) {

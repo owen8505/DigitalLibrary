@@ -294,11 +294,8 @@ hr.separator-2 {
 /*** LOGIN ***/
 
 #login {
-    position: fixed;
-    left: 0px;
-    right: 0px;
-    top: 0px;
-    bottom: 0px;
+    position: absolute;
+    width: 100%;
     padding-left: 5%;
     padding-right: 5%;
     margin: 0 auto;
