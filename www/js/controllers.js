@@ -451,7 +451,7 @@ angular.module('App.controllers', ['ngResource'])
 			} else {
 				$scope.updatePath($window, function () {
 					//alert('Opening file: ' + $scope.data.getCache('file_path') + document.serverRelativeUrl);
-					$window.open($scope.data.getCache('file_path') + document.serverRelativeUrl, '_blank');
+					$window.open($scope.data.getCache('file_path') + encodeURI(document.serverRelativeUrl), '_blank');
 					//$window.location.href = $scope.data.getCache('file_path') + document.serverRelativeUrl;
 				});
 			}
