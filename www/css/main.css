@@ -366,7 +366,7 @@ hr.separator-2 {
 /*** LIBRARY ***/
 
 #content {
-    margin-top: 2.8rem;
+    margin-top: 3.4rem;
 }
 
 #library {
@@ -671,7 +671,6 @@ hr.separator-2 {
     padding-top: 1rem;
     padding-bottom: 1rem;
     width: 100%;
-    text-align: right;
     background: #53607b; /* Old browsers */
     background: -moz-linear-gradient(top,  #53607b 0%, #2a303e 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#53607b), color-stop(100%,#2a303e)); /* Chrome,Safari4+ */
@@ -684,16 +683,16 @@ hr.separator-2 {
 }
 
 #topMenu-bar .title {
-    display: inline-block;
+  width: 100%;
     font-size: 1rem;
     text-align: center;
-    width: 50%;
+    color: white;
 }
 
 #menu-btn-container {
-    display: inline-block;
-    width: 25%;
-    padding-right: 3%
+    position: absolute;
+  top: 0.8rem;
+  right: 0.8rem;
 }
 
 #menu-btn {
@@ -713,8 +712,30 @@ hr.separator-2 {
     
 }
 
+#back-btn-container {
+    position: absolute;
+    top: 0.8rem;
+    left: 0.8rem;
+}
+
+#back-btn {
+    font-size: 0.8rem;
+    background: #2A303E;
+    color: white;
+
+    text-align: center;
+    padding: 0.3rem 0.6rem;
+    
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #333;
+}
+
 #topMenu-right {
-	position: fixed;
+    position: fixed;
     left: 0px;
     right: 0px;
     bottom: 0px;
@@ -726,7 +747,7 @@ hr.separator-2 {
     overflow-y: auto;
 }
 #topMenu-right .clickable:hover {
-	background: #444444;
+    background: #444444;
 }
 
 ul.nav-department{
