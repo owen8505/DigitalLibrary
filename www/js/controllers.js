@@ -363,24 +363,6 @@ angular.module('App.controllers', ['ngResource'])
 	
 	/** Descarga archivo **/
 	$scope.downloadFile = function (path, serverUrl, documentHTML) {
-        var fileTransfer = new FileTransfer();
-		fileTransfer.download(
-			"http://sap.mexusbio.org/DigitalLibraryServices/SharePointDataAccess.svc/Document?d=" + encodeURI(serverUrl),
-			path + serverUrl,
-			function(theFile) {
-				documentHTML.removeClass('downloading');
-				documentHTML.addClass('local');
-                $scope.verifyDocuments($window, $scope.elements);
-			},
-			function(error) {
-				alert("Download error: " + JSON.stringify(error));
-				documentHTML.removeClass('downloading');
-                console.log("ERROR: " + error);
-				console.log("download error source " + error.source);
-				console.log("download error target " + error.target);
-				console.log("upload error code: " + error.code);
-			}
-		);
 		var deferred = $q.defer();
 			var LibraryService = $resource(
 				"http://sap.mexusbio.org/DigitalLibraryServices/SharePointDataAccess.svc/Document?d=:d",
@@ -412,11 +394,11 @@ angular.module('App.controllers', ['ngResource'])
 								documentHTML.addClass('local');
 								$scope.showOptionsID = -1;
                 				$scope.data.showDocumentOptions = false;
-                				$scope.verifyLocalDocuments();
+                				$scope.verifyDocuments($window, $scope.elements);
             				},
             				// Register the errorHandler
             				function errorHandler(err) {
-            					alert("Error converting string to file.");
+            					alert("Error downloading the file. Try again.");
 								documentHTML.removeClass('downloading');
 							},
 							// Define what class to route messages to
